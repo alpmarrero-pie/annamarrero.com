@@ -6,14 +6,14 @@
 //   device: a device mockup on a transparent background (centred, no frame)
 (function () {
   var PROJECTS = [
-    { id: 'analysis-agent', k: 'ai', title: 'Analysis Agent', tag: 'AI Model Design', desc: 'An AI agent that cut analysis from 7.5 days to 2 hours.', bg: '#8C98A8', img: '/images/56384a55a404ea1c60d7434c5e72e76a.png', bare: true, page: '/analysis-agent' },
+    { id: 'analysis-agent', k: 'ai', title: 'Analysis Agent', tag: 'AI Agent Design', desc: 'An AI agent that cut analysis from 7.5 days to 2 hours.', bg: '#8C98A8', img: '/images/56384a55a404ea1c60d7434c5e72e76a.png', bare: true, page: '/analysis-agent' },
     { id: 'eltaai', k: 'product', title: 'EltaAI', tag: 'Product Design', desc: 'A safety app, from prototype to App Store.', bg: '#7F93EC', img: '/images/9d3463f1cbd287ffee49b093e89f06ba.png', page: '/eltaai' },
     { id: 'continuing-community', k: 'product', title: 'Continuing Community', tag: 'Product Design', desc: 'Alumni mentors, designed in a three-week sprint.', bg: '#6AB0E0', img: '/images/ba9744940fbc4d60f6aa593568758430.jpg', page: '/continuing-community' },
     { id: 'trusted-contact-program', k: 'service', title: 'Trusted Contact Program', tag: 'Service Design', desc: 'A new fraud safeguard, built into existing workflows.', bg: '#A38CDF', img: '/images/b8744df2ac4678f6ce765eb2f42be73b.jpg', pos: 'left top', page: '/trusted-contact' },
     { id: 'loss-of-a-loved-one', k: 'service', title: 'Loss of a Loved One', tag: 'Service Design', desc: 'A 42-day process, mapped and made clearer.', bg: '#8C98A8', img: '/images/cc26f7ed47879f9bb4e47ddc00f0fc4b.png', device: true, page: '/loss-of-a-loved-one' },
     { id: 'business-services', k: 'service', title: 'Business Services', tag: 'Service Design', desc: 'Storyboards that won CEO buy-in before launch.', bg: '#7F93EC', img: '/images/33c1ced7270040156d584e5158bb88d3.jpg', pos: 'left center', page: '/business-services' }
   ];
-  var FILTERS = [['all', 'All work'], ['service', 'Service Design'], ['product', 'Product Design'], ['ai', 'AI Model Design']];
+  var FILTERS = [['all', 'All work'], ['service', 'Service Design'], ['product', 'Product Design'], ['ai', 'AI Agent Design']];
 
   var main = document.getElementById('td-main');
   var stage = document.getElementById('td-stage');
