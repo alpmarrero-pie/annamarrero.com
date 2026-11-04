@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work — Anna Marrero</title>
+<meta name="description" content="Selected case studies in service design, product design and AI model design.">
+<meta property="og:title" content="Work — Anna Marrero">
+<meta property="og:description" content="Selected case studies in service design, product design and AI model design.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&amp;family=Manrope:wght@400;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+html,body{overscroll-behavior-x:none}
+/* One size drives the slides and the stage, so the stage always fits its slide. Phones get wider slides. */
+.td-page{--td-w:min(54vw, 660px, 72vh);--td-arrow:clamp(48px, 5vw, 64px)}
+@media (max-width: 720px){.td-page{--td-w:min(80vw, 520px, 60vh)}}
+body{margin:0;background:#FDFDFC}
+a{color:#0F2233}a:hover{color:#1F3A52}
+.td-nav a{text-decoration:none}
+.td-nav a:hover{text-decoration:underline;text-underline-offset:6px}
+.td-nav a:focus-visible,.td-slide:focus-visible,.td-btn:focus-visible,.td-dash:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+.td-slide{transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .6s ease,box-shadow .6s ease}
+.td-title{animation:td-in .7s cubic-bezier(.2,.7,.2,1) both}
+@keyframes td-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.td-btn{transition:background-color .2s ease,color .2s ease}
+.td-btn:hover{background-color:#0F2233 !important;color:#F3F5F6 !important}
+.td-dash{transition:width .4s ease,background-color .4s ease}
+.td-desc{white-space:nowrap}
+@media (max-width: 720px){.td-desc{white-space:normal;max-width:520px}}
+.td-pill{transition:background-color .2s ease,color .2s ease,border-color .2s ease}
+.td-pill:hover{border-color:#0F2233 !important}
+.td-pill:focus-visible{outline:2px solid #0F2233;outline-offset:3px}
+.ft-links a{color:#3D4A57;text-decoration:none}
+.ft-links a:hover{color:#0F2233;text-decoration:underline;text-underline-offset:5px}
+.ft-links a:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+@media (prefers-reduced-motion: reduce){
+  .td-slide,.td-dash{transition:none}
+  .td-title{animation:none}
+}
+.cs-k,.aa-bandk,.bs-pairk,.bs-sidek{font-family:'IBM Plex Mono','Courier New',monospace;font-weight:500}
+/* Site header: logo placeholder and links in IBM Plex Mono; right side left open */
+.hd-logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;border:1px dashed rgba(15,34,51,.35);font-family:'IBM Plex Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4E6578 !important;text-decoration:none !important}
+.hd-links{display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,28px);font-family:'IBM Plex Mono','Courier New',monospace;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.hd-links a{color:#4E6578 !important;text-decoration:none !important;transition:color .2s ease}
+.hd-links a:hover,.hd-links a[aria-current="page"]{color:#0F2233 !important}
+</style>
+<style>[hidden]{display:none !important}</style>
+<link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+<main class="td-page" id="td-main" style="min-height: 100vh; overflow: clip; display: flex; flex-direction: column; color: #0F2233; font-family: 'Manrope', system-ui, sans-serif; background-color: #FDFDFC">
+  <!-- Sticky top menu: stays in view while the page scrolls -->
+  <div class="site-nav" style="position: sticky; top: 0; z-index: 100; width: 100%; background: rgba(253,253,252,.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(15,34,51,.08)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+      <header class="td-nav" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding: clamp(14px, 2vw, 20px) 0">
+          <div style="display: flex; align-items: center; gap: clamp(20px, 3vw, 36px)">
+            <nav class="hd-links" aria-label="Main"><a href="/">Home</a><a href="/work" aria-current="page">Work</a><a href="/about">About</a></nav>
+          </div>
+          <!-- Right side: intentionally left open -->
+          <div aria-hidden="true"></div>
+        </header>
+    </div>
+  </div>
+
+  <!-- Progress dashes: one per project -->
+  <div role="group" aria-label="Choose a project" id="td-dashes" style="display: flex; justify-content: center; gap: 6px; padding: 0"></div>
+  <p style="margin: 0 0 clamp(10px, 2vh, 18px); text-align: center; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; color: #2B3A48" id="td-counter"></p>
+
+
+
+  <!-- The 3D stage: the current project faces you; neighbours turn away into depth -->
+  
+
+  
+
+
+  <!-- Slide backgrounds: each project's colour with a soft light from the top left, a slight deepening toward the bottom right, and the dot grid on top -->
+  <!-- Current project, below the slideshow, with the arrows either side of its title -->
+  <section aria-label="Projects" aria-roledescription="carousel" id="td-stage" style="position: relative; flex: 0 0 auto; height: calc(var(--td-w) * 0.625 + 16px); perspective: 1600px; touch-action: pan-y; cursor: grab">
+    <div style="position: absolute; inset: 0; transform-style: preserve-3d" id="td-slides"></div>
+    <!-- Arrows: fixed either side of the current case study image -->
+    
+      <button class="td-btn" type="button" id="td-prev" hidden aria-label="Previous project" style="position: absolute; top: calc(var(--td-w) * 0.3125); transform: translateY(-50%); left: max(8px, calc(50% - var(--td-w) / 2 - var(--td-arrow) - clamp(12px, 2vw, 28px))); z-index: 30; width: var(--td-arrow); height: var(--td-arrow); border-radius: 50%; border: 1px solid #0F2233; background: rgba(253,253,252,.8); color: #0F2233; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="M11 6l-6 6 6 6"></path></svg>
+    </button>
+    
+      <button class="td-btn" type="button" id="td-next" aria-label="Next project" style="position: absolute; top: calc(var(--td-w) * 0.3125); transform: translateY(-50%); right: max(8px, calc(50% - var(--td-w) / 2 - var(--td-arrow) - clamp(12px, 2vw, 28px))); z-index: 30; width: var(--td-arrow); height: var(--td-arrow); border-radius: 50%; border: 1px solid #0F2233; background: rgba(253,253,252,.8); color: #0F2233; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
+        <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+    </button>
+  </section><section style="position: relative; z-index: 20; flex: 1; display: flex; align-items: center; justify-content: center; padding: clamp(20px, 4vh, 36px) clamp(12px, 4vw, 32px) clamp(16px, 3vh, 28px)">
+    <div style="flex: 0 1 auto; min-width: 0; max-width: 820px; display: flex; flex-direction: column; align-items: center; text-align: center">
+      <div aria-live="polite" id="td-current"></div>
+    </div>
+  </section>
+
+  <!-- Filter by type of work: its own row at the bottom, so it never moves with the title -->
+  <div role="group" aria-label="Filter projects by type of work" id="td-pills" style="flex: 0 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 0 clamp(12px, 4vw, 32px) clamp(24px, 5vh, 44px)"></div>
+  <!-- Footer: email and social links on the left, name on the right -->
+  <footer style="flex: 0 0 auto; margin-top: auto; border-top: 1px solid rgba(15,34,51,.12)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 22px clamp(16px, 4vw, 32px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; font-family: 'Manrope', system-ui, sans-serif; font-size: 15px; color: #3D4A57">
+      <nav class="ft-links" aria-label="Elsewhere" style="display: flex; flex-wrap: wrap; gap: 8px clamp(16px, 2.4vw, 28px)">
+        <a href="mailto:alpmarrero@gmail.com">Email</a>
+        <a href="https://x.com/alpmarrero" target="_blank" rel="noopener noreferrer">@alpmarrero on X</a>
+        <a href="https://www.linkedin.com/in/alpmarrero/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.are.na/anna-marrero" target="_blank" rel="noopener noreferrer">Are.na</a>
+      </nav>
+      <p style="margin: 0">© Anna Marrero 2026</p>
+    </div>
+  </footer>
+</main>
+<script src="/js/work.js" defer></script>
+</body>
+</html>

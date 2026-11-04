@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Services — Anna Marrero</title>
+<meta name="description" content="Case study: storyboards that won CEO buy-in before launch.">
+<meta property="og:title" content="Business Services — Anna Marrero">
+<meta property="og:description" content="Case study: storyboards that won CEO buy-in before launch.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&amp;family=Manrope:wght@400;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#FDFDFC}
+a{color:#0F2233}a:hover{color:#1F3A52}
+.cs-nav a{text-decoration:none}
+.cs-nav a:hover{text-decoration:underline;text-underline-offset:6px}
+.cs-nav a:focus-visible,.cs-link:focus-visible,.ft-links a:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+/* Expandable images: an expand cursor on hover, click opens the viewer */
+.cs-zoom{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%230F2233' fill-opacity='.9'/%3E%3Cpath d='M23 12h5v5M28 12l-6 6M17 28h-5v-5M12 28l6-6' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 20 20, zoom-in;transition:transform .25s ease}
+.cs-zoom:hover{transform:translateY(-2px)}
+.cs-zoom:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+.cs-lb-btn{min-width:44px;min-height:44px;padding:10px 16px;border-radius:999px;border:1px solid rgba(243,245,246,.4);background:transparent;color:#F3F5F6;font:600 14px 'Manrope',system-ui,sans-serif;cursor:pointer}
+.cs-lb-btn:hover{background:rgba(243,245,246,.12)}
+.cs-lb-btn:focus-visible{outline:2px solid #F3F5F6;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.cs-zoom{transition:none}}
+.cs-link{text-decoration:none}
+.cs-link:hover{text-decoration:underline;text-underline-offset:5px}
+.ft-links a{color:#3D4A57;text-decoration:none}
+.ft-links a:hover{color:#0F2233;text-decoration:underline;text-underline-offset:5px}
+/* Alternate layout: a centred 1040px column, two-column splits and image panels */
+.cs-sec{padding:clamp(56px,8vw,104px) 0 0}
+.cs-split>:only-child{grid-column:1/-1}
+.cs-split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:start}
+.cs-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cs-donuts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1.5vw,20px);align-items:center}
+@media (max-width: 820px){.cs-three{grid-template-columns:1fr}.cs-donuts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cs-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,4vw,48px)}
+@media (max-width: 820px){.cs-split,.cs-two{grid-template-columns:minmax(0,1fr)}}
+.cs-panel{padding:clamp(16px,3.5vw,44px);border-radius:20px;background:#E3E8EB}
+.cs-cap{margin-top:12px;font-size:14px;line-height:1.5;color:#3D4A57}
+.cs-k{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#4E6578}
+.cs-h2{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(26px,2.8vw,36px);font-weight:400;line-height:1.2}
+.cs-p{margin:0;font-size:16px;line-height:1.7;color:#3D4A57}
+.cs-stat{display:flex;align-items:baseline;gap:20px;padding:18px 0;border-top:1px solid rgba(15,34,51,.14)}
+.cs-num{margin:0;flex:0 0 220px;white-space:nowrap;font-family:'Newsreader',Georgia,serif;font-size:clamp(30px,3vw,40px);font-weight:300;line-height:1}
+.cs-statlabel{margin:0;font-size:14px;line-height:1.5;color:#3D4A57}
+.cs-chip{padding:6px 12px;border-radius:999px;border:1px solid rgba(15,34,51,.25);font-size:13px}
+.cs-card{padding:22px 24px;border-radius:14px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1)}
+.cs-cardk{margin:0 0 8px;font-size:13px;font-weight:600;color:#4E6578}
+.cs-cardp{margin:0;font-size:15px;line-height:1.55}
+/* Process sections: the label sits above each section's content */
+/* Business Services */
+.bs-four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.bs-stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
+@media (max-width: 820px){.bs-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.bs-stat{border-top:1px solid rgba(15,34,51,.14);padding-top:14px}
+.bs-statn{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(32px,3.4vw,44px);font-weight:300;line-height:1}
+.bs-statl{margin:8px 0 0;font-size:14px;line-height:1.45;color:#3D4A57}
+.bs-heur{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(20px,4vw,48px);padding:clamp(20px,3vw,32px);border-radius:20px;background:#E3E8EB;align-items:center}
+.bs-heurtext{display:flex;flex-direction:column;gap:10px}
+.bs-heurh{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(22px,2.2vw,28px);font-weight:400;line-height:1.2}
+.bs-compare{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+.bs-side{display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:14px;background:#FFFFFF;min-width:0}
+.bs-side .cs-zoom img{max-height:300px;object-fit:contain}
+.bs-sidek{margin:0;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.bs-sidek::before{content:"";width:18px;height:18px;border-radius:50%;background-repeat:no-repeat;background-position:center;background-size:12px}
+.bs-bad{color:#9A3B3B}.bs-bad::before{background-color:#F3D6D6;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 3l6 6M9 3l-6 6' stroke='%239A3B3B' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E")}
+.bs-good{color:#2F6B45}.bs-good::before{background-color:#D3E8D9;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.5l2.3 2.3L9.5 3.5' stroke='%232F6B45' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.bs-note{padding:16px;border-radius:10px;border:1px dashed rgba(15,34,51,.25);font-size:14px;line-height:1.55;color:#2B3A48}
+.bs-titles{display:flex;flex-direction:column;gap:10px}
+.bs-titlecard{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:10px;border:1px solid rgba(15,34,51,.12)}
+.bs-tk{font-size:12px;color:#3D4A57}
+.bs-bar{display:block;height:4px;border-radius:2px;background:#0F2233}
+.bs-tt{font-size:15px;font-weight:600;line-height:1.3}
+.bs-video{border-radius:16px;overflow:hidden;background:#0F2233;box-shadow:0 1px 3px rgba(15,34,51,.08),0 10px 28px rgba(15,34,51,.10)}
+.bs-video video{display:block;width:100%;height:auto;aspect-ratio:1430/1164;background:#0F2233}
+.bs-recs{padding:22px 24px;border-radius:16px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1)}
+.bs-recs ul{margin:12px 0 0;padding:0;list-style:none}
+.bs-recs li{padding:10px 0;border-top:1px solid rgba(15,34,51,.1);font-size:15px}
+.bs-prio{margin:0;display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(15,34,51,.08);font-size:12px;font-weight:600}
+.bs-prio-hi{background:#0F2233;color:#F3F5F6}
+.bs-hmw{margin-top:clamp(32px,4vw,48px);padding:clamp(24px,4vw,40px);border-radius:20px;background:#0F2233;color:#F3F5F6}
+.bs-hmw .cs-k{color:#C9D6E1}
+.bs-hmwq{margin:10px 0 0;font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:clamp(24px,2.8vw,36px);font-weight:300;line-height:1.25}
+.bs-pairs{list-style:none;margin:clamp(32px,4vw,48px) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.bs-pair{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:14px;align-items:start;padding:18px 20px;border-radius:14px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1)}
+.bs-pairarrow{padding-top:18px;color:#4E6578}
+.bs-pairk{margin:0 0 6px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#9A3B3B}
+.bs-pairk-o{color:#2F6B45}
+.bs-pairp{margin:0;font-size:14px;line-height:1.5}
+@media (max-width: 820px){.bs-four{grid-template-columns:1fr 1fr}.bs-heur{grid-template-columns:1fr}.bs-pairs{grid-template-columns:1fr}}
+@media (max-width: 520px){.bs-compare{grid-template-columns:1fr}}
+.bs-instats{margin-top:clamp(32px,4vw,48px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.bs-instat{border-top:1px solid rgba(15,34,51,.14);padding-top:14px}
+.bs-stages{list-style:none;margin:clamp(28px,4vw,40px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;counter-reset:none}
+.bs-stage{display:flex;flex-direction:column;gap:12px;padding:20px;border-radius:16px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1)}
+.bs-stagek{margin:0;display:flex;align-items:center;gap:10px;font-family:'Newsreader',Georgia,serif;font-size:clamp(18px, calc(18px + 2 * (100vw - 390px) / 1050), 20px);line-height:1.2}
+.bs-stagen{flex:0 0 auto;width:30px;height:30px;border-radius:50%;background:#0F2233;color:#F3F5F6;display:inline-flex;align-items:center;justify-content:center;font-family:'Manrope',system-ui,sans-serif;font-size:12px;font-weight:600}
+.bs-row{margin:0;display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;font-size:14px;line-height:1.45}
+.bs-row-pain{background:#F6E3E3;color:#5E2525}
+.bs-row-fix{background:#DDEEE2;color:#1F4A30}
+.bs-ico{flex:0 0 auto;width:18px;height:18px;margin-top:1px;border-radius:50%;background-repeat:no-repeat;background-position:center;background-size:11px}
+.bs-row-pain .bs-ico{background-color:#FFFFFF;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 3l6 6M9 3l-6 6' stroke='%239A3B3B' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E")}
+.bs-row-fix .bs-ico{background-color:#FFFFFF;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.5l2.3 2.3L9.5 3.5' stroke='%232F6B45' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
+.bs-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width: 820px){.bs-instats{grid-template-columns:1fr}.bs-stages{grid-template-columns:1fr}}
+.cs-step{display:flex;flex-direction:column;gap:14px;padding:clamp(48px,7vw,88px) 0;border-top:1px solid rgba(15,34,51,.12)}
+.cs-k,.aa-bandk,.bs-pairk,.bs-sidek{font-family:'IBM Plex Mono','Courier New',monospace;font-weight:500}
+/* Site header: logo placeholder and links in IBM Plex Mono; right side left open */
+.hd-logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;border:1px dashed rgba(15,34,51,.35);font-family:'IBM Plex Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4E6578 !important;text-decoration:none !important}
+.hd-links{display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,28px);font-family:'IBM Plex Mono','Courier New',monospace;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.hd-links a{color:#4E6578 !important;text-decoration:none !important;transition:color .2s ease}
+.hd-links a:hover,.hd-links a[aria-current="page"]{color:#0F2233 !important}
+</style>
+<style>[hidden]{display:none !important}</style>
+<link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+<!--
+  Trusted Contact Program, written into the case study template. Two reading speeds:
+  - Scanning: hero, the three "at a glance" cards, the final artifact, then each section's bold key point.
+  - Reading: the short paragraph, artifact and decision callout under each key point.
+  Keep each key point to one sentence and each paragraph to 2–4 sentences.
+-->
+<main style="min-height: 100vh; display: flex; flex-direction: column; background: #FDFDFC; color: #0F2233; font-family: 'Manrope', system-ui, sans-serif">
+  <!-- Sticky top menu: stays in view while the page scrolls -->
+  <div class="site-nav" style="position: sticky; top: 0; z-index: 100; width: 100%; background: rgba(253,253,252,.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(15,34,51,.08)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+      <header class="cs-nav" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding: clamp(14px, 2vw, 20px) 0">
+          <div style="display: flex; align-items: center; gap: clamp(20px, 3vw, 36px)">
+            <nav class="hd-links" aria-label="Main"><a href="/">Home</a><a href="/work" aria-current="page">Work</a><a href="/about">About</a></nav>
+          </div>
+          <!-- Right side: intentionally left open -->
+          <div aria-hidden="true"></div>
+        </header>
+    </div>
+  </div>
+
+  <div style="width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+
+    <section aria-labelledby="cs-title" style="padding: clamp(48px, 8vw, 96px) 0 clamp(28px, 4vw, 40px); display: flex; flex-direction: column; gap: 20px">
+      <p style="font-family: 'IBM Plex Mono', 'Courier New', monospace; margin: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #4E6578">Service Design</p>
+      <h1 id="cs-title" style="margin: 0; max-width: 900px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(38px, 5.2vw, 68px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em">Business Services</h1>
+      <p class="cs-subtitle" style="margin: -8px 0 0; max-width: 820px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.4vw, 32px); font-weight: 300; line-height: 1.25; color: #2B3A48">Finding the friction before a new service launch.</p>
+      <p style="margin: 0; max-width: 680px; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; color: #3D4A57; width: min(797px, 100%)">Business Services was about to launch. Leadership needed to know how opening an account felt, online and in branch. I audited the journey and made the friction hard to ignore.</p>
+    </section>
+
+    <figure style="margin: 0">
+      <div class="cs-panel" style="padding: 0; overflow: hidden">
+        <img src="/images/33c1ced7270040156d584e5158bb88d3.jpg" alt="Future-state service blueprint for opening a business account, across member, branch staff, back office, JRNI and marketing lanes" style="display: block; width: 100%; height: auto">
+      </div>
+    </figure>
+
+    <dl style="margin: clamp(28px, 4vw, 40px) 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px 32px"><div><dt class="cs-k">Role</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Lead Service Designer &amp; UX Researcher</dd></div><div><dt class="cs-k">Partners</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Business Services, branch reps, executive leadership</dd></div><div><dt class="cs-k">Methods</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Interviews, heuristic analysis, benchmarking, contextual inquiry, storyboards, blueprints</dd></div><div><dt class="cs-k">Timeline</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">April 2025 – February 2026</dd></div></dl>
+
+    <section aria-label="At a glance" style="padding-top: clamp(56px, 8vw, 96px)">
+      <div class="cs-two">
+        <div>
+          <p class="cs-k" style="margin: 0 0 12px">Problem</p>
+          <p style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; line-height: 1.3">Business account opening was a new and major strategic initiative for Golden 1. Despite its magnitude, both the online and in-branch processes were hard to complete.</p>
+        </div>
+        <div>
+          <p class="cs-k" style="margin: 0 0 12px">Solution</p>
+          <p style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; line-height: 1.3">A redesigned online account opening process and recommendations to increase efficiencies in branch, relayed via service blueprint and storyboards.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Stakeholders -->
+    <section class="cs-sec" aria-labelledby="s-stake">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">01 · SCOPE</p>
+          <h2 id="s-stake" class="cs-h2">Developing a birds' eye view of the project</h2>
+        </div>
+        <p class="cs-p" style="padding-top: 34px">I start every project by learning who’s involved, what’s in scope, what’s hard, and what success looks like.</p>
+      </div>
+      <div class="bs-four" style="margin-top: clamp(32px, 4vw, 48px)">
+        <div class="cs-card"><p class="cs-cardk">Stakeholders</p><p class="cs-cardp">Who holds influence. Who feels the change.</p></div>
+        <div class="cs-card"><p class="cs-cardk">Scope</p><p class="cs-cardp">What’s done, what’s moving, what’s missing.</p></div>
+        <div class="cs-card"><p class="cs-cardk">Challenges</p><p class="cs-cardp">Friction and constraints.</p></div>
+        <div class="cs-card"><p class="cs-cardk">Vision</p><p class="cs-cardp">Where the team wants to go.</p></div>
+      </div>
+    </section>
+
+    <!-- 2. Audit + benchmark -->
+    <section class="cs-sec" aria-labelledby="s-audit">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">02 · COMPETITIVE ANALYSIS</p>
+          <h2 id="s-audit" class="cs-h2">Benchmarking peers.</h2>
+        </div>
+        
+      </div>
+      <p class="cs-p" style="padding-top: 16px">I mapped the out-of-the-box flow and marked heuristic issues. Then I compared it with California and national competitors. Working at a credit union with limited resources means we often look towards competitors for guidance. This case study was completed in 2025. Since then, I've established a culture of design research at Golden 1 where we now use real users to test our products.</p><div class="bs-stats" style="margin-top: clamp(40px, 6vw, 64px)"><div class="bs-stat"><p class="bs-statn">91%</p><p class="bs-statl">&nbsp;include a back button</p></div><div class="bs-stat"><p class="bs-statn">87%</p><p class="bs-statl">show a progress bar</p></div><div class="bs-stat"><p class="bs-statn">76%</p><p class="bs-statl">list needed documents</p></div><div class="bs-stat"><p class="bs-statn">50%</p><p class="bs-statl">signal required fields</p></div><div class="bs-stat"><p class="bs-statn">36%</p><p class="bs-statl">let you save and resume</p></div><div class="bs-stat"><p class="bs-statn">28%</p><p class="bs-statl">ask for a NAICS code, and all of them explain it</p></div></div>
+      <div style="margin-top: clamp(28px, 4vw, 40px)">
+        <figure style="margin: 0">
+          <div class="cs-panel" style="background: #FFFFFF">
+            <button class="cs-zoom" type="button" aria-label="Expand image: competitor benchmark matrix" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/9feb3c94100122a20f00a8612f6b2a64.jpg" alt="Competitor matrix: 16 banks and credit unions compared on personal info first, titles, NAICS code, detailed steps, what you will need, resume, required fields and back button" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button>
+          </div>
+          <figcaption class="cs-cap">16 banks and credit unions, eight criteria.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 3. Friction -->
+    <section class="cs-sec" aria-labelledby="s-friction">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">03 · UX AUDIT</p>
+          <h2 id="s-friction" class="cs-h2" style="width: min(938px, 100%)">Three design patterns causing the most friction.</h2>
+        </div>
+        
+      </div>
+      <div style="display: flex; flex-direction: column; gap: clamp(28px, 4vw, 40px); margin-top: clamp(36px, 5vw, 56px)">
+        <article class="bs-heur">
+          <div class="bs-heurtext">
+            <p class="cs-k" style="margin: 0">Trust</p>
+            <h3 class="bs-heurh">No way back</h3>
+            <p class="cs-p" style="font-size: 15px">No back button means one mistake can lead to a denial. It signals mistrust, against Golden 1’s values.</p>
+          </div>
+          <div class="bs-compare">
+            <div class="bs-side"><p class="bs-sidek bs-bad">Golden 1</p><button class="cs-zoom" type="button" aria-label="Expand image: Golden 1 form without a back button" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/8d68e8315d4867336127f3c72004e1c3.png" alt="Golden 1 business application page with a single Continue button and no back button" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+            <div class="bs-side"><p class="bs-sidek bs-good">Competitors</p><button class="cs-zoom" type="button" aria-label="Expand image: competitor navigation with back and save" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/c198761fbc41aa0a59ea78b9f8426978.png" alt="Competitor navigation with Next, Previous, Save and Exit, and Cancel" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+          </div>
+        </article><article class="bs-heur">
+          <div class="bs-heurtext">
+            <p class="cs-k" style="margin: 0">Context</p>
+            <h3 class="bs-heurh">No warning about what’s needed</h3>
+            <p class="cs-p" style="font-size: 15px">No one said which documents to have ready, or which fields were required. Small friction adds up.</p>
+          </div>
+          <div class="bs-compare">
+            <div class="bs-side"><p class="bs-sidek bs-bad">Golden 1</p><div class="bs-note">No list of required documents before starting; required fields not flagged; NAICS code requested without explanation.</div></div>
+            <div class="bs-side"><p class="bs-sidek bs-good">Competitors</p><button class="cs-zoom" type="button" aria-label="Expand image: competitor before you begin page" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/ecefec837ba346afa41a8965cd4d4300.png" alt="Competitor Before you begin page listing who can apply online and what to have ready" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+          </div>
+        </article><article class="bs-heur">
+          <div class="bs-heurtext">
+            <p class="cs-k" style="margin: 0">Cognitive overload</p>
+            <h3 class="bs-heurh">Always “almost done”</h3>
+            <p class="cs-p" style="font-size: 15px">A vague progress bar. Titles that keep hinting at the end. One page asked 25 similar yes/no questions in a row.</p>
+          </div>
+          <div class="bs-compare">
+            <div class="bs-side"><p class="bs-sidek bs-bad">Golden 1</p><div class="bs-titles" role="img" aria-label="Three consecutive Golden 1 page titles, each suggesting the end is near: Just a little more information; Additional personal information; Great, now let’s get some additional details about your request">
+              <div class="bs-titlecard"><span class="bs-tk">Additional Info</span><span class="bs-bar" style="width: 72%"></span><span class="bs-tt">Just a little more information.</span></div>
+              <div class="bs-titlecard"><span class="bs-tk">Additional Personal Info</span><span class="bs-bar" style="width: 84%"></span><span class="bs-tt">Additional personal information</span></div>
+              <div class="bs-titlecard"><span class="bs-tk">Additional Features</span><span class="bs-bar" style="width: 94%"></span><span class="bs-tt">Great, now let’s get some additional details about your request…</span></div>
+            </div></div>
+            <div class="bs-side"><p class="bs-sidek bs-good">Competitors</p><button class="cs-zoom" type="button" aria-label="Expand image: repeated yes or no questions" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/3279cc6d850a24e625ac421a63db1fae.png" alt="A long column of similarly worded yes or no questions about the business and its owners" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. Storyboards -->
+    <section class="cs-sec" aria-labelledby="s-story">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">04 · Storyboards</p>
+          <h2 id="s-story" class="cs-h2" style="width: min(999px, 100%)">Allowing stakeholders to connect to design needs through stories.</h2>
+        </div>
+        
+      </div>
+      <p class="cs-p" style="padding-top: 16px">I made two short storyboards: one from a member’s view, one celebrating what worked. The CEO felt the frustration and asked for the fixes before launch.</p><div class="cs-two" style="margin-top: clamp(36px, 5vw, 56px); align-items: start">
+        <figure style="margin: 0">
+          <div class="bs-video"><video src="/images/d19917c6aaa1579a80b44f50301d8a47.mp4" poster="/images/2a9065d91d5c96227f881645b532e890.jpg" controls="" playsinline="" preload="none" aria-label="Storyboard video: The digital account opening journey"></video></div>
+          <figcaption class="cs-cap"><strong style="color: rgb(15, 34, 51); font-weight: 600">Opening online.</strong>&nbsp;"Unhappy path"</figcaption>
+        </figure>
+        <figure style="margin: 0">
+          <div class="bs-video"><video src="/images/41913ac864b0064c12fa36c143f4269f.mp4" poster="/images/4f0bcd13ecdab436f48e24ec61c5fce1.jpg" controls="" playsinline="" preload="none" aria-label="Storyboard video: Celebrating wins"></video></div>
+          <figcaption class="cs-cap"><strong style="color: rgb(15, 34, 51); font-weight: 600">Celebrating wins.</strong> What the service gets right, "Happy Path"</figcaption>
+        </figure>
+      </div>
+      <div class="cs-two" style="margin-top: clamp(40px, 6vw, 64px)">
+        <div class="bs-recs">
+          <p class="bs-prio bs-prio-hi">High priority</p>
+          <ul><li>Add a back button</li><li>Flag important information up front</li><li>Update titles and show detailed progress</li></ul>
+        </div>
+        <div class="bs-recs">
+          <p class="bs-prio">Lower priority</p>
+          <ul><li>Explain NAICS codes</li><li>Signal required fields</li><li>Rearrange similar questions</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. In-branch -->
+    <section class="cs-sec" aria-labelledby="s-branch">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">05 · SERVICE DESIGN</p>
+          <h2 id="s-branch" class="cs-h2">Addressing in-branch inefficiencies.</h2>
+        </div>
+        <p class="cs-p" style="padding-top: 34px">Through interviews with Business Account Reps, contextual inquiry, and log data analysis, I developed an understanding of the current end-to-end experience along with its inefficiencies.</p>
+      </div>
+      <figure style="margin: clamp(32px, 4vw, 48px) 0 0">
+        <div class="cs-panel" style="background: #FFFFFF"><button class="cs-zoom" type="button" aria-label="Expand image: high level journey map" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/2b9dfe5d4d45f0eb04ba3835acbb640b.jpg" alt="High-level map of business account opening: pre-appointment, questions, funding and approval, and account creation, with annotations" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+        
+      </figure><div class="bs-hmw">
+        <p class="cs-k" style="margin: 0">Problem statement</p>
+        <p class="bs-hmwq">How might we streamline in-branch account opening to reduce the average 2-hour completion time?</p>
+      </div>
+      <div class="bs-instats">
+        <div class="bs-instat"><p class="bs-statn">2 hrs</p><p class="bs-statl">average to open a business account in branch</p></div>
+        <div class="bs-instat"><p class="bs-statn">~10 min</p><p class="bs-statl">lost to reps switching between four systems</p></div>
+        <div class="bs-instat"><p class="bs-statn">6</p><p class="bs-statl">friction points, each paired with a fix</p></div>
+      </div>
+      <ol class="bs-stages">
+          <li class="bs-stage">
+            <p class="bs-stagek"><span class="bs-stagen">01</span>Before the visit</p>
+            <p class="bs-row bs-row-pain"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Challenge: </span>Members arrive without an appointment or documents</span></p>
+            <p class="bs-row bs-row-fix"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Opportunity: </span>Required docs shown at booking, plus reminder emails</span></p>
+          </li>
+          <li class="bs-stage">
+            <p class="bs-stagek"><span class="bs-stagen">02</span>Turned away</p>
+            <p class="bs-row bs-row-pain"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Challenge: </span>No consistent rep follow-up</span></p>
+            <p class="bs-row bs-row-fix"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Opportunity: </span>Rep outreach added to the procedure</span></p>
+          </li>
+          <li class="bs-stage">
+            <p class="bs-stagek"><span class="bs-stagen">03</span>Funding</p>
+            <p class="bs-row bs-row-pain"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Challenge: </span>Account linking fails; members re-send statements</span></p>
+            <p class="bs-row bs-row-fix"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Opportunity: </span>Pause linking; drop statements for existing members</span></p>
+          </li>
+          <li class="bs-stage">
+            <p class="bs-stagek"><span class="bs-stagen">04</span>Missing documents</p>
+            <p class="bs-row bs-row-pain"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Challenge: </span>Back to the branch to reschedule</span></p>
+            <p class="bs-row bs-row-fix"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Opportunity: </span>Resume by phone or video call</span></p>
+          </li>
+          <li class="bs-stage">
+            <p class="bs-stagek"><span class="bs-stagen">05</span>Remote ID</p>
+            <p class="bs-row bs-row-pain"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Challenge: </span>Photo capture glitches lose applicants</span></p>
+            <p class="bs-row bs-row-fix"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Opportunity: </span>Photo upload plus a one-time passcode</span></p>
+          </li>
+          <li class="bs-stage">
+            <p class="bs-stagek"><span class="bs-stagen">06</span>Rep workstation</p>
+            <p class="bs-row bs-row-pain"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Challenge: </span>Four systems on one screen, about 10 extra minutes</span></p>
+            <p class="bs-row bs-row-fix"><span class="bs-ico" aria-hidden="true"></span><span><span class="bs-sr">Opportunity: </span>A second monitor</span></p>
+          </li>
+      </ol>
+      
+      <figure style="margin: clamp(32px, 4vw, 48px) 0 0">
+        <div class="cs-panel" style="background: #FFFFFF"><button class="cs-zoom" type="button" aria-label="Expand image: future state blueprint" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/33c1ced7270040156d584e5158bb88d3.jpg" alt="Future state service blueprint for in-branch business account opening with the changes applied" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+        
+      </figure>
+    </section>
+
+    <!-- 6. Next -->
+    <section class="cs-sec" aria-labelledby="s-next">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">06 · Next</p>
+          <h2 id="s-next" class="cs-h2">Validate before it scales.</h2>
+        </div>
+        <ol style="list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(15,34,51,.14)"><li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 44px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(18px, calc(18px + 4 * (100vw - 390px) / 1050), 22px); line-height: 1.2; color: #9DB1C2">01</span><span style="font-size: 15px; line-height: 1.6">One week of rapid testing.</span></li><li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 44px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(18px, calc(18px + 4 * (100vw - 390px) / 1050), 22px); line-height: 1.2; color: #9DB1C2">02</span><span style="font-size: 15px; line-height: 1.6">Check feasibility with the platform vendor.</span></li><li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 44px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(18px, calc(18px + 4 * (100vw - 390px) / 1050), 22px); line-height: 1.2; color: #9DB1C2">03</span><span style="font-size: 15px; line-height: 1.6">Prepare operations for more applications.</span></li></ol>
+      </div>
+    </section>
+
+    <nav aria-label="More case studies" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px 48px; padding: clamp(40px, 6vw, 72px) 0 clamp(72px, 11.5vw, 166px); border-top: 1px solid rgba(15,34,51,.12); margin-top: clamp(48px, 7vw, 88px)">
+      <a class="cs-link" href="/loss-of-a-loved-one" style="display: flex; flex-direction: column; gap: 10px; color: #0F2233">
+        <span class="cs-k">Previous case study</span>
+        <span style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(24px, 2.8vw, 36px); font-weight: 300; line-height: 1.15">← Loss of a Loved One</span>
+      </a>
+      <a class="cs-link" href="/analysis-agent" style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; text-align: right; color: #0F2233">
+        <span class="cs-k">Next case study</span>
+        <span style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(24px, 2.8vw, 36px); font-weight: 300; line-height: 1.15">Analysis Agent →</span>
+      </a>
+    </nav>
+  </div>
+
+  <footer style="margin-top: auto; border-top: 1px solid rgba(15,34,51,.12)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 22px clamp(16px, 4vw, 32px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; font-size: 15px; color: #3D4A57">
+      <nav class="ft-links" aria-label="Elsewhere" style="display: flex; flex-wrap: wrap; gap: 8px clamp(16px, 2.4vw, 28px)">
+        <a href="mailto:alpmarrero@gmail.com">Email</a>
+        <a href="https://x.com/alpmarrero" target="_blank" rel="noopener noreferrer">@alpmarrero on X</a>
+        <a href="https://www.linkedin.com/in/alpmarrero/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.are.na/anna-marrero" target="_blank" rel="noopener noreferrer">Are.na</a>
+      </nav>
+      <p style="margin: 0">© Anna Marrero 2026</p>
+    </div>
+  </footer>
+  <!-- Image viewer: fits the image to the screen; click the image (or Zoom) to see it at full size and scroll around -->
+  
+    <div id="lb" hidden role="dialog" aria-modal="true" aria-label="Image viewer" style="position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; background: rgba(15,34,51,.92); font-family: 'Manrope', system-ui, sans-serif">
+      <div style="flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px clamp(16px, 3vw, 28px); color: #F3F5F6">
+        <p style="margin: 0; min-width: 0; font-size: 14px; line-height: 1.4; color: rgba(243,245,246,.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap" id="lb-cap"></p>
+        <div style="display: flex; gap: 8px; flex: 0 0 auto">
+          <button class="cs-lb-btn" type="button" id="lb-toggle">Zoom in</button>
+          <button class="cs-lb-btn" type="button" id="lb-close" aria-label="Close image viewer">Close ✕</button>
+        </div>
+      </div>
+      <div id="lb-backdrop" style="flex: 1 1 auto; min-height: 0; overflow: auto; display: flex; padding: 0 clamp(16px, 3vw, 28px) 24px; box-sizing: border-box">
+        <img id="lb-img" alt="" style="display: block; margin: auto; border-radius: 8px; background: #FFFFFF; box-shadow: 0 20px 60px rgba(0,0,0,.35);">
+      </div>
+    </div>
+  
+</main>
+<script src="/js/lightbox.js" defer></script>
+</body>
+</html>

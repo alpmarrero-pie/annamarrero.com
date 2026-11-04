@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analysis Agent — Anna Marrero</title>
+<meta name="description" content="Case study: an AI agent that cut competitive analysis from 7.5 days to 2 hours.">
+<meta property="og:title" content="Analysis Agent — Anna Marrero">
+<meta property="og:description" content="Case study: an AI agent that cut competitive analysis from 7.5 days to 2 hours.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&amp;family=Manrope:wght@400;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#FDFDFC}
+a{color:#0F2233}a:hover{color:#1F3A52}
+.cs-nav a{text-decoration:none}
+.cs-nav a:hover{text-decoration:underline;text-underline-offset:6px}
+.cs-nav a:focus-visible,.cs-link:focus-visible,.ft-links a:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+/* Expandable images: an expand cursor on hover, click opens the viewer */
+.cs-zoom{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%230F2233' fill-opacity='.9'/%3E%3Cpath d='M23 12h5v5M28 12l-6 6M17 28h-5v-5M12 28l6-6' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 20 20, zoom-in;transition:transform .25s ease}
+.cs-zoom:hover{transform:translateY(-2px)}
+.cs-zoom:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+.cs-lb-btn{min-width:44px;min-height:44px;padding:10px 16px;border-radius:999px;border:1px solid rgba(243,245,246,.4);background:transparent;color:#F3F5F6;font:600 14px 'Manrope',system-ui,sans-serif;cursor:pointer}
+.cs-lb-btn:hover{background:rgba(243,245,246,.12)}
+.cs-lb-btn:focus-visible{outline:2px solid #F3F5F6;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.cs-zoom{transition:none}}
+.cs-link{text-decoration:none}
+.cs-link:hover{text-decoration:underline;text-underline-offset:5px}
+.ft-links a{color:#3D4A57;text-decoration:none}
+.ft-links a:hover{color:#0F2233;text-decoration:underline;text-underline-offset:5px}
+/* Alternate layout: a centred 1040px column, two-column splits and image panels */
+.cs-sec{padding:clamp(56px,8vw,104px) 0 0}
+.cs-split>:only-child{grid-column:1/-1}
+.cs-split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:start}
+.cs-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cs-donuts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1.5vw,20px);align-items:center}
+@media (max-width: 820px){.cs-three{grid-template-columns:1fr}.cs-donuts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cs-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,4vw,48px)}
+@media (max-width: 820px){.cs-split,.cs-two{grid-template-columns:minmax(0,1fr)}}
+.cs-panel{padding:clamp(16px,3.5vw,44px);border-radius:20px;background:#E3E8EB}
+.cs-cap{margin-top:12px;font-size:14px;line-height:1.5;color:#3D4A57}
+.cs-k{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#4E6578}
+.cs-h2{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(26px,2.8vw,36px);font-weight:400;line-height:1.2}
+.cs-p{margin:0;font-size:16px;line-height:1.7;color:#3D4A57}
+.cs-stat{display:flex;align-items:baseline;gap:20px;padding:18px 0;border-top:1px solid rgba(15,34,51,.14)}
+.cs-num{margin:0;flex:0 0 220px;white-space:nowrap;font-family:'Newsreader',Georgia,serif;font-size:clamp(30px,3vw,40px);font-weight:300;line-height:1}
+.cs-statlabel{margin:0;font-size:14px;line-height:1.5;color:#3D4A57}
+.cs-chip{padding:6px 12px;border-radius:999px;border:1px solid rgba(15,34,51,.25);font-size:13px}
+.cs-card{padding:22px 24px;border-radius:14px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1)}
+.cs-cardk{margin:0 0 8px;font-size:13px;font-weight:600;color:#4E6578}
+.cs-cardp{margin:0;font-size:15px;line-height:1.55}
+/* Process sections: the label sits above each section's content */
+/* Analysis Agent: hero image. The image has no background of its own; the project colour and dot grid sit behind it, and its cards run off the bottom edge */
+.aa-hero{border-radius:20px;overflow:hidden;background-color:#E4D6B8;background-image:radial-gradient(circle, rgba(78,86,98,.32) 1.1px, transparent 1.5px);background-size:22px 22px;background-position:11px 11px;padding:clamp(20px,4vw,48px) clamp(16px,4vw,48px) 0}
+.aa-hero img{display:block;width:100%;height:auto}
+/* Analysis Agent: outcome band */
+.aa-band{margin-top:clamp(8px,2vw,16px);padding:clamp(28px,4vw,48px) clamp(20px,4vw,48px);border-radius:24px;background:#0F2233;color:#F3F5F6;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+.aa-bandk{margin:0;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#C9D6E1}
+.aa-big{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(34px,4.6vw,56px);font-weight:300;line-height:1;letter-spacing:-.02em}
+.aa-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.aa-bandsub{margin:0;font-size:14px;color:rgba(243,245,246,.78)}
+.aa-scale{width:100%;max-width:720px;margin-top:clamp(16px,3vw,28px);display:flex;flex-direction:column;gap:12px}
+.aa-scalerow{display:grid;grid-template-columns:90px minmax(0,1fr) 72px;align-items:center;gap:14px;text-align:left}
+.aa-scalelabel{font-size:12px;color:rgba(243,245,246,.7)}
+.aa-scaleval{font-family:'Newsreader',Georgia,serif;font-size:17px;text-align:right}
+.aa-scaletrack{height:14px;border-radius:999px;background:rgba(243,245,246,.1);overflow:hidden}
+.aa-fill{display:block;height:100%;border-radius:999px}
+.aa-fill-old{background:rgba(243,245,246,.38)}
+.aa-fill-new{background:#C9D6E1;min-width:10px}
+.aa-bandstats{width:100%;max-width:720px;margin-top:clamp(20px,3vw,32px);padding-top:clamp(20px,3vw,28px);border-top:1px solid rgba(243,245,246,.18);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.aa-stat{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(24px,2.6vw,32px);font-weight:300;line-height:1}
+.aa-statl{margin:8px 0 0;font-size:12px;line-height:1.45;color:rgba(243,245,246,.72)}
+/* pipelines */
+.aa-pipes{display:flex;flex-direction:column;gap:clamp(24px,3vw,36px)}
+.aa-pipe{display:flex;flex-direction:column;gap:12px}
+.aa-steps{list-style:none;margin:0;padding:0;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:22px}
+.aa-step{position:relative}
+.aa-step:not(:last-child)::after{content:'→';position:absolute;right:-17px;top:50%;transform:translateY(-50%);color:#4E6578;font-size:15px}
+.aa-step{display:flex;align-items:center;gap:10px;padding:14px 14px;min-height:64px;box-sizing:border-box;border-radius:12px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1);font-size:14px;line-height:1.3}
+.aa-step-dark{background:#0F2233;color:#F3F5F6;border-color:#0F2233}
+.aa-stepn{flex:0 0 auto;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;background:rgba(15,34,51,.08)}
+.aa-step-dark .aa-stepn{background:rgba(243,245,246,.16)}
+.aa-arrow{color:#4E6578;font-size:16px}
+.aa-pipenote{margin:0;font-size:14px;color:#3D4A57}
+.aa-lessons{margin-top:clamp(32px,4vw,48px)}
+/* rounds */
+.aa-rounds{list-style:none;margin:clamp(36px,5vw,56px) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2.5vw,32px);position:relative}
+.aa-rounds::before{content:"";position:absolute;left:8px;right:0;top:8px;height:2px;background:linear-gradient(90deg,#0F2233 0 76%,rgba(15,34,51,.18) 76%)}
+.aa-round{position:relative;display:flex;flex-direction:column;gap:10px;padding-top:34px}
+.aa-dot{position:absolute;top:0;left:0;width:18px;height:18px;border-radius:50%;background:#0F2233;box-shadow:0 0 0 5px #FDFDFC}
+.aa-round-now .aa-dot{background:#FDFDFC;border:2px solid #0F2233;box-sizing:border-box}
+.aa-roundk{margin:0;font-size:13px;font-weight:600;letter-spacing:.04em;color:#4E6578}
+.aa-roundp{margin:0;font-size:15px;line-height:1.6;color:#2B3A48}
+.aa-now{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;background:#C9D6E1;color:#0F2233;font-size:12px;letter-spacing:0}
+/* testing */
+.aa-measure{margin:0;padding:0;list-style:none;border-top:1px solid rgba(15,34,51,.14)}
+.aa-measure li{padding:12px 0;border-bottom:1px solid rgba(15,34,51,.14);font-size:15px}
+.aa-gauge{padding:36px 8px 0}
+.aa-gtrack{position:relative;height:12px;border-radius:999px;background:rgba(15,34,51,.1)}
+.aa-gfill{position:absolute;top:0;height:100%;background:#9DB1C2;border-radius:999px}
+.aa-gmark{position:absolute;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#FAFBFC;border:3px solid #4E6578;box-sizing:border-box}
+.aa-gmark-final{background:#0F2233;border-color:#0F2233}
+.aa-gtag{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:13px;font-weight:600;color:#4E6578}
+.aa-gtag-final{color:#0F2233}
+.aa-gticks{display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:#3D4A57}
+.aa-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.aa-tile{padding:20px;border-radius:14px;background:#FAFBFC}
+.aa-tilen{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(32px,3.4vw,44px);font-weight:300;line-height:1}
+.aa-tilel{margin:10px 0 0;font-size:13px;line-height:1.45;color:#3D4A57}
+/* taxonomy */
+.aa-tax{margin-top:clamp(36px,5vw,56px);display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,4vw,56px);align-items:start}
+.aa-pats{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.aa-pat{padding:16px 18px;border-radius:14px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1)}
+.aa-patt{margin:0;display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600}
+.aa-pate{margin:6px 0 0 34px;font-size:14px;line-height:1.5;color:#3D4A57}
+.aa-fixtag{flex:0 0 auto;width:24px;height:24px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#0F2233}
+.aa-fix-A{background:#D6DFE7}.aa-fix-B{background:#C9D6E1}.aa-fix-C{background:#EDC6D0}
+.aa-fixes{display:flex;flex-direction:column;gap:12px;position:sticky;top:96px}
+.aa-fix{padding:20px 22px;border-radius:14px;border-left:4px solid}
+.aa-fixc-A{background:rgba(214,223,231,.45);border-color:#9FB3C4}
+.aa-fixc-B{background:rgba(201,214,225,.45);border-color:#9DB1C2}
+.aa-fixc-C{background:rgba(237,198,208,.45);border-color:#D9A3B1}
+.aa-fixk{margin:0;display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600}
+.aa-fixp{margin:10px 0 0;font-size:14px;line-height:1.55;color:#2B3A48}
+.aa-schemeh{margin:0 0 24px;font-family:'Newsreader',Georgia,serif;font-size:clamp(22px,2.2vw,28px);font-weight:400}
+.aa-scheme{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,3vw,32px)}
+.aa-schemek{margin:0 0 10px;font-size:13px;font-weight:600;color:#0F2233}
+.aa-schemep{margin:0;font-size:14px;line-height:1.55;color:#2B3A48}
+.aa-chips{margin:0;display:flex;flex-wrap:wrap;gap:6px}
+.aa-chip{padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;color:#0F2233}
+.aa-c1{background:#BFD3C1}.aa-c2{background:#D6DFE7}.aa-c3{background:#C9D6E1}.aa-c4{background:#EDC6D0}.aa-c5{background:rgba(15,34,51,.12)}
+@media (max-width: 820px){.aa-steps{grid-auto-flow:row}.aa-step:not(:last-child)::after{content:'↓';right:auto;left:22px;top:auto;bottom:-20px;transform:none}.aa-rounds{grid-template-columns:1fr 1fr}.aa-rounds::before{display:none}.aa-tiles{grid-template-columns:1fr 1fr}.aa-tax,.aa-scheme{grid-template-columns:1fr}.aa-fixes{position:static}.aa-scalerow{grid-template-columns:70px minmax(0,1fr) 60px}}
+.cs-step{display:flex;flex-direction:column;gap:14px;padding:clamp(48px,7vw,88px) 0;border-top:1px solid rgba(15,34,51,.12)}
+.cs-k,.aa-bandk,.bs-pairk,.bs-sidek{font-family:'IBM Plex Mono','Courier New',monospace;font-weight:500}
+/* Site header: logo placeholder and links in IBM Plex Mono; right side left open */
+.hd-logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;border:1px dashed rgba(15,34,51,.35);font-family:'IBM Plex Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4E6578 !important;text-decoration:none !important}
+.hd-links{display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,28px);font-family:'IBM Plex Mono','Courier New',monospace;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.hd-links a{color:#4E6578 !important;text-decoration:none !important;transition:color .2s ease}
+.hd-links a:hover,.hd-links a[aria-current="page"]{color:#0F2233 !important}
+</style>
+<style>[hidden]{display:none !important}</style>
+<link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+<!--
+  Trusted Contact Program, written into the case study template. Two reading speeds:
+  - Scanning: hero, the three "at a glance" cards, the final artifact, then each section's bold key point.
+  - Reading: the short paragraph, artifact and decision callout under each key point.
+  Keep each key point to one sentence and each paragraph to 2–4 sentences.
+-->
+<main style="min-height: 100vh; display: flex; flex-direction: column; background: #FDFDFC; color: #0F2233; font-family: 'Manrope', system-ui, sans-serif">
+  <!-- Sticky top menu: stays in view while the page scrolls -->
+  <div class="site-nav" style="position: sticky; top: 0; z-index: 100; width: 100%; background: rgba(253,253,252,.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(15,34,51,.08)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+      <header class="cs-nav" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding: clamp(14px, 2vw, 20px) 0">
+          <div style="display: flex; align-items: center; gap: clamp(20px, 3vw, 36px)">
+            <nav class="hd-links" aria-label="Main"><a href="/">Home</a><a href="/work" aria-current="page">Work</a><a href="/about">About</a></nav>
+          </div>
+          <!-- Right side: intentionally left open -->
+          <div aria-hidden="true"></div>
+        </header>
+    </div>
+  </div>
+
+  <div style="width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+
+    <section aria-labelledby="cs-title" style="padding: clamp(48px, 8vw, 96px) 0 clamp(28px, 4vw, 40px); display: flex; flex-direction: column; gap: 20px">
+      <p style="font-family: 'IBM Plex Mono', 'Courier New', monospace; margin: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #4E6578">AI Model Design</p>
+      <h1 id="cs-title" style="margin: 0; max-width: 900px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(38px, 5.2vw, 68px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em">Analysis Agent</h1>
+      <p class="cs-subtitle" style="margin: -8px 0 0; max-width: 820px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.4vw, 32px); font-weight: 300; line-height: 1.25; color: #2B3A48">From 7.5 days to 2 hours, without losing trust</p>
+      <p style="margin: 0; max-width: 680px; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; color: #3D4A57">Competitive analysis is one of the credit union’s most-used research inputs, and one of the most manual. I proved an agent could do it, then tested how it fails.</p>
+    </section>
+
+    <figure class="aa-hero" style="margin: 0">
+      <img src="/images/56384a55a404ea1c60d7434c5e72e76a.png" alt="Three Notion pages from the Competitive Analysis Agent workspace: Testing Plan, Parameters &amp; Measures, and Guidelines &amp; Templates">
+    </figure>
+
+    <dl style="margin: clamp(28px, 4vw, 40px) 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px 32px"><div><dt class="cs-k">Role</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Lead UX Designer</dd></div><div><dt class="cs-k">Partners</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">IT</dd></div><div><dt class="cs-k">Methods</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Prompt design, async testing, error logging, failure taxonomy</dd></div><div><dt class="cs-k">Timeline</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">2026 · In progress</dd></div></dl>
+
+    <section aria-label="Challenge and role" style="padding-top: clamp(56px, 8vw, 96px)">
+      <div class="cs-two">
+        <div>
+          <p class="cs-k" style="margin: 0 0 12px">Challenge</p>
+          <p style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; line-height: 1.3">With little room to test, the credit union watches competitors. Every site is checked by hand. One pass can take weeks.</p>
+        </div>
+        <div>
+          <p class="cs-k" style="margin: 0 0 12px">My role</p>
+          <p style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; line-height: 1.3">I’d run these analyses for years. I proposed automating them, wrote the prompt, built it with IT, and ran three rounds of testing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline: the rounds of work, right after challenge and role -->
+    <section class="cs-sec" aria-label="Timeline" style="padding-top: clamp(40px, 6vw, 72px)">
+      <p class="cs-k" style="margin: 0">Timeline</p>
+      <ol class="aa-rounds" style="margin-top: clamp(16px, 2vw, 24px)">
+        <li class="aa-round aa-round-done">
+            <span class="aa-dot" aria-hidden="true"></span>
+            <p class="aa-roundk">01 · First draft</p>
+            <p class="aa-roundp">Drafted from past analyses. Built with IT.</p>
+          </li><li class="aa-round aa-round-done">
+            <span class="aa-dot" aria-hidden="true"></span>
+            <p class="aa-roundk">02 · Round 1 · Solo Testing</p>
+            <p class="aa-roundp">Found gaps. Logged limits.</p>
+          </li><li class="aa-round aa-round-done">
+            <span class="aa-dot" aria-hidden="true"></span>
+            <p class="aa-roundk">03 · Round 2 · Group (5) testing</p>
+            <p class="aa-roundp">Measured the fixes. Found more gaps.</p>
+          </li><li class="aa-round aa-round-now">
+            <span class="aa-dot" aria-hidden="true"></span>
+            <p class="aa-roundk">04 · Round 3 · Solo <span class="aa-now">In progress</span></p>
+            <p class="aa-roundp">Measuring the latest fixes, and the nudges that steer people around limits.</p>
+          </li>
+      </ol>
+    </section>
+
+    <!-- 1. Proving the use case -->
+    <section class="cs-sec" aria-labelledby="s-prove">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">01 · Use case</p>
+          <h2 id="s-prove" class="cs-h2">Prove it before building it.</h2>
+        </div>
+        <p class="cs-p" style="padding-top: 34px">I gave Co-Pilot analyses I’d already done and compared its answers to mine. They held up. Then I pulled past analyses from across the org to find the common competitors, features and formats. That became the first draft.</p>
+      </div>
+      <div style="margin-top: clamp(36px, 5vw, 56px)">
+        <div class="cs-panel aa-pipes">
+          <div class="aa-pipe">
+            <p class="cs-k" style="margin: 0">Manual</p>
+            <ol class="aa-steps"><li class="aa-step"><span class="aa-stepn">1</span>Open every competitor site</li><li class="aa-step"><span class="aa-stepn">2</span>Search for the topic</li><li class="aa-step"><span class="aa-stepn">3</span>Log whether it exists</li><li class="aa-step"><span class="aa-stepn">4</span>Note how it’s marketed</li><li class="aa-step"><span class="aa-stepn">5</span>Compile and recommend</li></ol>
+            <p class="aa-pipenote">One pass can take weeks.</p>
+          </div>
+          <div class="aa-pipe">
+            <p class="cs-k" style="margin: 0">With the agent</p>
+            <ol class="aa-steps"><li class="aa-step aa-step-dark"><span class="aa-stepn">1</span>Fixed control prompt</li><li class="aa-step aa-step-dark"><span class="aa-stepn">2</span>Agent reviews each site</li><li class="aa-step aa-step-dark"><span class="aa-stepn">3</span>Scored, sourced table</li><li class="aa-step aa-step-dark"><span class="aa-stepn">4</span>Human review and re-prompt</li></ol>
+            <p class="aa-pipenote">About two hours. A person checks the evidence.</p>
+          </div>
+        </div>
+      </div>
+      <div class="aa-lessons">
+        <p class="cs-k" style="margin: 0">What I’d do differently</p>
+        <div class="cs-two" style="margin-top: 16px">
+          <div class="cs-card"><p class="cs-cardk">Mistake 1 · No accuracy baseline</p><p class="cs-cardp">I judged accuracy by eye. A scored baseline would have given every round a number to beat.</p></div>
+          <div class="cs-card"><p class="cs-cardk">Mistake 2 · Prescribing instead of asking</p><p class="cs-cardp">I told the model exactly what to report. Sharing the goal and asking for a plan would have surfaced better ideas.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Testing -->
+    <section class="cs-sec" aria-labelledby="s-test">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">02 · Testing</p>
+          <h2 id="s-test" class="cs-h2">Testing that fits around real work.</h2>
+          <p class="cs-p" style="margin-top: 16px">Testing was async. A pre-survey captured time, confidence and ease of use. Everyone started from the same prompt, so results compared cleanly.</p>
+        </div>
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">What I measured</p>
+          <ul class="aa-measure">
+            <li>Baseline quality score on the first output</li>
+            <li>Number of re-prompts</li>
+            <li>Final quality score after re-prompting</li>
+            <li>Time to complete</li>
+            <li>Error categories</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cs-panel" style="margin-top: clamp(36px, 5vw, 56px); display: flex; flex-direction: column; gap: clamp(28px, 4vw, 40px)">
+        <div class="aa-gauge" role="img" aria-label="Quality score on a 1 to 5 scale: baseline 3 on the first output, 4 after two re-prompts">
+          <div class="aa-gtrack">
+            <span class="aa-gfill" style="left: 50%; width: 25%"></span>
+            <span class="aa-gmark" style="left: 50%"><span class="aa-gtag">Baseline 3</span></span>
+            <span class="aa-gmark aa-gmark-final" style="left: 75%"><span class="aa-gtag aa-gtag-final">After 2 re-prompts · 4</span></span>
+          </div>
+          <div class="aa-gticks" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+        </div>
+        <div class="aa-tiles"><div class="aa-tile"><p class="aa-tilen">3</p><p class="aa-tilel">Baseline quality score</p></div><div class="aa-tile"><p class="aa-tilen">2</p><p class="aa-tilel">Re-prompts</p></div><div class="aa-tile"><p class="aa-tilen">4</p><p class="aa-tilel">Final quality score</p></div><div class="aa-tile"><p class="aa-tilen">2 hrs</p><p class="aa-tilel">Time to complete, vs. 7.5 days without the agent</p></div></div>
+      </div>
+      <p class="cs-cap">Round 2 averages, 5 participants.</p>
+    </section>
+
+    <!-- 4. Failure taxonomy -->
+    <section class="cs-sec" aria-labelledby="s-fail">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">03 · Failure taxonomy</p>
+          <h2 id="s-fail" class="cs-h2">Know how it fails.</h2>
+        </div>
+        <p class="cs-p" style="padding-top: 34px">Speed only matters if people trust the output. I logged every error and grouped them into six patterns, each with a fix.</p>
+      </div>
+      <div class="aa-tax">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">Six patterns · one example each</p>
+          <ol class="aa-pats"><li class="aa-pat">
+            <p class="aa-patt"><span class="aa-fixtag aa-fix-A">A</span>Unable to read visual content</p>
+            <p class="aa-pate">Said a page had “zero photos, icons, or visual illustrations” when it had both.</p>
+          </li><li class="aa-pat">
+            <p class="aa-patt"><span class="aa-fixtag aa-fix-B">B</span>Skips sub-navigation</p>
+            <p class="aa-pate">Accessed a landing page but skipped the sub-navs linked on it.</p>
+          </li><li class="aa-pat">
+            <p class="aa-patt"><span class="aa-fixtag aa-fix-B">B</span>Blames imaginary restrictions</p>
+            <p class="aa-pate">Said it was “unable to access” a credit card page, though it had accessed the page beside it.</p>
+          </li><li class="aa-pat">
+            <p class="aa-patt"><span class="aa-fixtag aa-fix-B">B</span>Overconfident</p>
+            <p class="aa-pate">Tagged inferred findings as direct evidence.</p>
+          </li><li class="aa-pat">
+            <p class="aa-patt"><span class="aa-fixtag aa-fix-B">B</span>Searches first</p>
+            <p class="aa-pate">Relied on search and said a page didn’t exist when it was in the main nav.</p>
+          </li><li class="aa-pat">
+            <p class="aa-patt"><span class="aa-fixtag aa-fix-C">C</span>Inconsistent formatting</p>
+            <p class="aa-pate">Table structure and content changed from one response to the next.</p>
+          </li>
+          </ol>
+        </div>
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">Three fixes</p>
+          <div class="aa-fixes"><div class="aa-fix aa-fixc-A">
+            <p class="aa-fixk"><span class="aa-fixtag aa-fix-A">A</span>Ask for the visual</p>
+            <p class="aa-fixp">For visual tasks, ask for a screenshot. Don’t guess.</p>
+          </div><div class="aa-fix aa-fixc-B">
+            <p class="aa-fixk"><span class="aa-fixtag aa-fix-B">B</span>Make evidence traceable</p>
+            <p class="aa-fixp">Source every claim. Tag evidence and confidence. Cap weak scores. Follow the site’s own structure.</p>
+          </div><div class="aa-fix aa-fixc-C">
+            <p class="aa-fixk"><span class="aa-fixtag aa-fix-C">C</span>Lock the format</p>
+            <p class="aa-fixp">Same format every time, unless asked.</p>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="cs-panel" style="margin-top: clamp(32px, 4vw, 48px)">
+        <p class="cs-k" style="margin: 0 0 6px">The confidence scheme</p>
+        <p class="aa-schemeh">How fix B makes evidence traceable</p>
+        <div class="aa-scheme">
+          <div>
+            <p class="aa-schemek">Evidence type, on every claim</p>
+            <p class="aa-chips"><span class="aa-chip aa-c1">Direct</span><span class="aa-chip aa-c2">Secondary</span><span class="aa-chip aa-c3">Inferred</span><span class="aa-chip aa-c4">Guess</span><span class="aa-chip aa-c5">Unable to access</span></p>
+          </div>
+          <div>
+            <p class="aa-schemek">Confidence</p>
+            <p class="aa-chips"><span class="aa-chip aa-c1">High</span><span class="aa-chip aa-c3">Medium</span><span class="aa-chip aa-c4">Low</span></p>
+          </div>
+          <div>
+            <p class="aa-schemek">Scoring rule</p>
+            <p class="aa-schemep">Scores built on secondary or inferred evidence are capped at 3 and flagged for review. Every score explains why it isn’t higher, and why it isn’t lower.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="The outcome" class="aa-band" style="margin-top: clamp(56px, 8vw, 96px)">
+      <p class="aa-bandk">The outcome</p>
+      <p class="aa-big">7.5 days <span aria-hidden="true">→</span><span class="aa-sr"> to </span> 2 hours</p>
+      <p class="aa-bandsub">Time per competitive analysis, without and with the agent</p>
+      <div class="aa-scale" role="img" aria-label="Bar comparison: 7.5 days without the agent fills the track; 2 hours with the agent is a sliver">
+        <div class="aa-scalerow"><span class="aa-scalelabel">Without</span><div class="aa-scaletrack"><span class="aa-fill aa-fill-old" style="width: 100%"></span></div><span class="aa-scaleval">7.5 days</span></div>
+        <div class="aa-scalerow"><span class="aa-scalelabel">With agent</span><div class="aa-scaletrack"><span class="aa-fill aa-fill-new" style="width: 3.4%"></span></div><span class="aa-scaleval">2 hrs</span></div>
+      </div>
+      <div class="aa-bandstats">
+        <div><p class="aa-stat">30x</p><p class="aa-statl">faster to complete</p></div>
+        <div><p class="aa-stat">3 → 4</p><p class="aa-statl">quality score after re-prompting</p></div>
+        <div><p class="aa-stat">2</p><p class="aa-statl">average re-prompts per task</p></div>
+      </div>
+    </section>
+
+    <!-- 5. Next -->
+    <section class="cs-sec" aria-labelledby="s-next">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">04 · Next</p>
+          <h2 id="s-next" class="cs-h2">Clear limits build trust.</h2>
+          <p class="cs-p" style="margin-top: 16px">Speed alone won’t drive adoption. Next: define what the agent can’t do, and when a person must step in.</p>
+        </div>
+        <ol style="list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(15,34,51,.14)"><li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 44px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(18px, calc(18px + 4 * (100vw - 390px) / 1050), 22px); line-height: 1.2; color: #9DB1C2">01</span><span style="font-size: 15px; line-height: 1.6">Survey people on analysis with and without the agent.</span></li><li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 44px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(18px, calc(18px + 4 * (100vw - 390px) / 1050), 22px); line-height: 1.2; color: #9DB1C2">02</span><span style="font-size: 15px; line-height: 1.6">Reprogram the agent for each failure pattern.</span></li><li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 44px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(18px, calc(18px + 4 * (100vw - 390px) / 1050), 22px); line-height: 1.2; color: #9DB1C2">03</span><span style="font-size: 15px; line-height: 1.6">Measure against the taxonomy to define its limits.</span></li><li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 44px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(18px, calc(18px + 4 * (100vw - 390px) / 1050), 22px); line-height: 1.2; color: #9DB1C2">04</span><span style="font-size: 15px; line-height: 1.6">Share templates and guidance: what it does, when it needs a human, how to keep it transparent.</span></li></ol>
+      </div>
+    </section>
+
+    <nav aria-label="More case studies" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px 48px; padding: clamp(40px, 6vw, 72px) 0 clamp(72px, 11.5vw, 166px); border-top: 1px solid rgba(15,34,51,.12); margin-top: clamp(48px, 7vw, 88px)">
+      <a class="cs-link" href="/business-services" style="display: flex; flex-direction: column; gap: 10px; color: #0F2233">
+        <span class="cs-k">Previous case study</span>
+        <span style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(24px, 2.8vw, 36px); font-weight: 300; line-height: 1.15">← Business Services</span>
+      </a>
+      <a class="cs-link" href="/eltaai" style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; text-align: right; color: #0F2233">
+        <span class="cs-k">Next case study</span>
+        <span style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(24px, 2.8vw, 36px); font-weight: 300; line-height: 1.15">EltaAI →</span>
+      </a>
+    </nav>
+  </div>
+
+  <footer style="margin-top: auto; border-top: 1px solid rgba(15,34,51,.12)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 22px clamp(16px, 4vw, 32px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; font-size: 15px; color: #3D4A57">
+      <nav class="ft-links" aria-label="Elsewhere" style="display: flex; flex-wrap: wrap; gap: 8px clamp(16px, 2.4vw, 28px)">
+        <a href="mailto:alpmarrero@gmail.com">Email</a>
+        <a href="https://x.com/alpmarrero" target="_blank" rel="noopener noreferrer">@alpmarrero on X</a>
+        <a href="https://www.linkedin.com/in/alpmarrero/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.are.na/anna-marrero" target="_blank" rel="noopener noreferrer">Are.na</a>
+      </nav>
+      <p style="margin: 0">© Anna Marrero 2026</p>
+    </div>
+  </footer>
+  <!-- Image viewer: fits the image to the screen; click the image (or Zoom) to see it at full size and scroll around -->
+  
+    <div id="lb" hidden role="dialog" aria-modal="true" aria-label="Image viewer" style="position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; background: rgba(15,34,51,.92); font-family: 'Manrope', system-ui, sans-serif">
+      <div style="flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px clamp(16px, 3vw, 28px); color: #F3F5F6">
+        <p style="margin: 0; min-width: 0; font-size: 14px; line-height: 1.4; color: rgba(243,245,246,.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap" id="lb-cap"></p>
+        <div style="display: flex; gap: 8px; flex: 0 0 auto">
+          <button class="cs-lb-btn" type="button" id="lb-toggle">Zoom in</button>
+          <button class="cs-lb-btn" type="button" id="lb-close" aria-label="Close image viewer">Close ✕</button>
+        </div>
+      </div>
+      <div id="lb-backdrop" style="flex: 1 1 auto; min-height: 0; overflow: auto; display: flex; padding: 0 clamp(16px, 3vw, 28px) 24px; box-sizing: border-box">
+        <img id="lb-img" alt="" style="display: block; margin: auto; border-radius: 8px; background: #FFFFFF; box-shadow: 0 20px 60px rgba(0,0,0,.35);">
+      </div>
+    </div>
+  
+</main>
+<script src="/js/lightbox.js" defer></script>
+</body>
+</html>

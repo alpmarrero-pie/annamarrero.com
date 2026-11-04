@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Continuing Community — Anna Marrero</title>
+<meta name="description" content="Case study: alumni mentors, designed in a three-week sprint.">
+<meta property="og:title" content="Continuing Community — Anna Marrero">
+<meta property="og:description" content="Case study: alumni mentors, designed in a three-week sprint.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&amp;family=Manrope:wght@400;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#FDFDFC}
+a{color:#0F2233}a:hover{color:#1F3A52}
+.cs-nav a{text-decoration:none}
+.cs-nav a:hover{text-decoration:underline;text-underline-offset:6px}
+.cs-nav a:focus-visible,.cs-link:focus-visible,.ft-links a:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+/* Expandable images: an expand cursor on hover, click opens the viewer */
+.cs-zoom{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%230F2233' fill-opacity='.9'/%3E%3Cpath d='M23 12h5v5M28 12l-6 6M17 28h-5v-5M12 28l6-6' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 20 20, zoom-in;transition:transform .25s ease}
+.cs-zoom:hover{transform:translateY(-2px)}
+.cs-zoom:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+.cs-lb-btn{min-width:44px;min-height:44px;padding:10px 16px;border-radius:999px;border:1px solid rgba(243,245,246,.4);background:transparent;color:#F3F5F6;font:600 14px 'Manrope',system-ui,sans-serif;cursor:pointer}
+.cs-lb-btn:hover{background:rgba(243,245,246,.12)}
+.cs-lb-btn:focus-visible{outline:2px solid #F3F5F6;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.cs-zoom{transition:none}}
+.cs-link{text-decoration:none}
+.cs-link:hover{text-decoration:underline;text-underline-offset:5px}
+.ft-links a{color:#3D4A57;text-decoration:none}
+.ft-links a:hover{color:#0F2233;text-decoration:underline;text-underline-offset:5px}
+/* Alternate layout: a centred 1040px column, two-column splits and image panels */
+.cs-sec{padding:clamp(56px,8vw,104px) 0 0}
+.cs-split>:only-child{grid-column:1/-1}
+.cs-split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:start}
+.cs-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cs-donuts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1.5vw,20px);align-items:center}
+@media (max-width: 820px){.cs-three{grid-template-columns:1fr}.cs-donuts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cs-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,4vw,48px)}
+@media (max-width: 820px){.cs-split,.cs-two{grid-template-columns:minmax(0,1fr)}}
+.cs-panel{padding:clamp(16px,3.5vw,44px);border-radius:20px;background:#E3E8EB}
+.cs-cap{margin-top:12px;font-size:14px;line-height:1.5;color:#3D4A57}
+.cs-k{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#4E6578}
+.cs-h2{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(26px,2.8vw,36px);font-weight:400;line-height:1.2}
+.cs-p{margin:0;font-size:16px;line-height:1.7;color:#3D4A57}
+.cs-stat{display:flex;align-items:baseline;gap:20px;padding:18px 0;border-top:1px solid rgba(15,34,51,.14)}
+.cs-num{margin:0;flex:0 0 220px;white-space:nowrap;font-family:'Newsreader',Georgia,serif;font-size:clamp(30px,3vw,40px);font-weight:300;line-height:1}
+.cs-statlabel{margin:0;font-size:14px;line-height:1.5;color:#3D4A57}
+.cs-chip{padding:6px 12px;border-radius:999px;border:1px solid rgba(15,34,51,.25);font-size:13px}
+.cs-card{padding:22px 24px;border-radius:14px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1)}
+.cs-cardk{margin:0 0 8px;font-size:13px;font-weight:600;color:#4E6578}
+.cs-cardp{margin:0;font-size:15px;line-height:1.55}
+/* Process sections: the label sits above each section's content */
+/* Continuing Community */
+.cc-insight{margin-top:clamp(40px,6vw,64px);padding:clamp(28px,4vw,48px);border-radius:20px;background:#0F2233;color:#F3F5F6;text-align:center}
+.cc-insightq{margin:14px auto 0;max-width:760px;font-family:'Newsreader',Georgia,serif;font-size:clamp(24px,2.8vw,34px);font-weight:300;line-height:1.3}
+.cc-pains{list-style:none;margin:clamp(32px,4vw,48px) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cc-pain{display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:14px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1);font-family:'Newsreader',Georgia,serif;font-size:clamp(18px, calc(18px + 2 * (100vw - 390px) / 1050), 20px);line-height:1.3}
+.cc-who{align-self:flex-start;padding:3px 9px;border-radius:999px;font-family:'Manrope',system-ui,sans-serif;font-size:12px;font-weight:600}
+.cc-who-A{background:#C9D6E1}.cc-who-C{background:#D6DFE7}
+.cc-market{margin-top:clamp(36px,5vw,56px);display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:clamp(16px,3vw,32px);align-items:start}
+.cc-sketches{margin-top:clamp(36px,5vw,56px);display:grid;grid-template-columns:1.4fr 1fr 1.4fr;gap:12px;align-items:stretch}
+.cc-sketches .cs-zoom,.cc-sketches .cs-zoom img{height:100%}
+.cc-sketches .cs-zoom img{object-fit:cover}
+.cc-dsgrid{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cc-feat{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,5vw,64px);align-items:center}
+.cc-flip .cc-ftext{order:2}
+.cc-flip{grid-template-columns:minmax(0,7fr) minmax(0,4fr)}
+.cc-ftext{display:flex;flex-direction:column;gap:12px}
+.cc-fp{margin:0;padding-left:16px;border-left:2px solid #9DB1C2;font-size:16px;line-height:1.6;color:#2B3A48}
+.cc-chg{margin-top:4px;padding:14px 16px;border-radius:12px;background:#E3E8EB}
+.cc-chgk{margin:0 0 6px;font-family:'IBM Plex Mono','Courier New',monospace;font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#4E6578}
+.cc-chgp{margin:0;font-size:14px;line-height:1.55;color:#2B3A48}
+.cc-fimg{padding:clamp(8px,1.5vw,16px);border-radius:20px;background:#FFFFFF}
+.cc-mb{max-width:880px;margin:0 auto}
+.cc-lid{position:relative;margin:0 6.5%;padding:2.2% 2.2% 3%;background:#1C1D1F;border-radius:18px 18px 6px 6px;box-shadow:inset 0 0 0 1.5px #3A3B3E,0 18px 40px rgba(15,34,51,.18)}
+.cc-cam{position:absolute;top:.9%;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#2E3034}
+.cc-screen{border-radius:3px;overflow:hidden;background:#FFFFFF;aspect-ratio:3022/1702}
+.cc-screen video{display:block;width:100%;height:100%;object-fit:cover}
+.cc-base{position:relative;height:14px;background:linear-gradient(#E3E4E6,#C4C6C9 70%,#A9ABAF);border-radius:2px 2px 14px 14px/2px 2px 10px 10px;box-shadow:0 14px 22px -8px rgba(15,34,51,.35)}
+.cc-base span{position:absolute;top:0;left:50%;width:16%;height:6px;transform:translateX(-50%);background:linear-gradient(#B9BBBE,#D3D5D8);border-radius:0 0 8px 8px}
+@media (max-width: 820px){.cc-pains{grid-template-columns:1fr 1fr}.cc-market,.cc-feat,.cc-flip{grid-template-columns:1fr}.cc-flip .cc-ftext{order:0}.cc-sketches{grid-template-columns:1fr}.cc-dsgrid{grid-template-columns:1fr}}
+.cc-brand{margin-top:clamp(24px,3vw,32px);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(20px,4vw,48px);align-items:center;padding:clamp(22px,3vw,32px);border-radius:20px;background:#0F2233;color:#F3F5F6}
+.cc-brand .cs-k{color:#C9D6E1}.cc-brand .cs-p{color:rgba(243,245,246,.8)}
+.cc-brandtext{display:flex;flex-direction:column;gap:10px}
+.cc-brandh{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(22px,2.4vw,30px);font-weight:300;line-height:1.25}
+.cc-renames{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.cc-renames li{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:6px 14px;padding:16px 18px;border-radius:14px;background:rgba(243,245,246,.08)}
+.cc-old{font-size:14px;color:rgba(243,245,246,.6);text-decoration:line-through}
+.cc-arrow{color:#C9D6E1}
+.cc-new{font-family:'Newsreader',Georgia,serif;font-size:clamp(21px, calc(21px + 5 * (100vw - 390px) / 1050), 26px);line-height:1;color:#F3F5F6}
+.cc-why{grid-column:1/-1;font-size:13px;color:rgba(243,245,246,.72)}
+@media (max-width: 820px){.cc-brand{grid-template-columns:1fr}}
+.cs-step{display:flex;flex-direction:column;gap:14px;padding:clamp(48px,7vw,88px) 0;border-top:1px solid rgba(15,34,51,.12)}
+.cs-k,.aa-bandk,.bs-pairk,.bs-sidek{font-family:'IBM Plex Mono','Courier New',monospace;font-weight:500}
+/* Site header: logo placeholder and links in IBM Plex Mono; right side left open */
+.hd-logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;border:1px dashed rgba(15,34,51,.35);font-family:'IBM Plex Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4E6578 !important;text-decoration:none !important}
+.hd-links{display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,28px);font-family:'IBM Plex Mono','Courier New',monospace;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.hd-links a{color:#4E6578 !important;text-decoration:none !important;transition:color .2s ease}
+.hd-links a:hover,.hd-links a[aria-current="page"]{color:#0F2233 !important}
+</style>
+<style>[hidden]{display:none !important}</style>
+<link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+<!--
+  Trusted Contact Program, written into the case study template. Two reading speeds:
+  - Scanning: hero, the three "at a glance" cards, the final artifact, then each section's bold key point.
+  - Reading: the short paragraph, artifact and decision callout under each key point.
+  Keep each key point to one sentence and each paragraph to 2–4 sentences.
+-->
+<main style="min-height: 100vh; display: flex; flex-direction: column; background: #FDFDFC; color: #0F2233; font-family: 'Manrope', system-ui, sans-serif">
+  <!-- Sticky top menu: stays in view while the page scrolls -->
+  <div class="site-nav" style="position: sticky; top: 0; z-index: 100; width: 100%; background: rgba(253,253,252,.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(15,34,51,.08)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+      <header class="cs-nav" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding: clamp(14px, 2vw, 20px) 0">
+          <div style="display: flex; align-items: center; gap: clamp(20px, 3vw, 36px)">
+            <nav class="hd-links" aria-label="Main"><a href="/">Home</a><a href="/work" aria-current="page">Work</a><a href="/about">About</a></nav>
+          </div>
+          <!-- Right side: intentionally left open -->
+          <div aria-hidden="true"></div>
+        </header>
+    </div>
+  </div>
+
+  <div style="width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+
+    <section aria-labelledby="cs-title" style="padding: clamp(48px, 8vw, 96px) 0 clamp(28px, 4vw, 40px); display: flex; flex-direction: column; gap: 20px">
+      <p style="font-family: 'IBM Plex Mono', 'Courier New', monospace; margin: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #4E6578">Product Design</p>
+      <h1 id="cs-title" style="margin: 0; max-width: 900px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(38px, 5.2vw, 68px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em">Continuing Community</h1>
+      <p class="cs-subtitle" style="margin: -8px 0 0; max-width: 820px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.4vw, 32px); font-weight: 300; line-height: 1.25; color: #2B3A48">Bringing BRIDGEGOOD alumni back as mentors</p>
+      <p style="margin: 0; max-width: 680px; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; color: #3D4A57">BRIDGEGOOD is an Oakland nonprofit that opens design careers to job seekers. In a three-week sprint, we designed a product that connects its alumni with new designers.</p>
+    </section>
+
+    <figure style="margin: 0">
+      <div class="cs-panel" style="padding: 0; overflow: hidden; background: #0D3A9C">
+        <button class="cs-zoom" type="button" aria-label="Expand image: Continuing Community mobile screens" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/ba9744940fbc4d60f6aa593568758430.jpg" alt="Several phone screens of the Continuing Community app angled on a royal blue background" style="display: block; width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; object-position: center 45%; border-radius: 10px; background: #FFFFFF; box-shadow: none; border-radius: 0"></button>
+      </div>
+    </figure>
+
+    <dl style="margin: clamp(28px, 4vw, 40px) 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px 32px"><div><dt class="cs-k">Role</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Lead Product Designer</dd></div><div><dt class="cs-k">Team</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">3 designers</dd></div><div><dt class="cs-k">Timeline</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">3-week design sprint</dd></div><div><dt class="cs-k">Tool</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Adobe XD</dd></div></dl>
+
+    <section aria-label="At a glance" style="padding-top: clamp(56px, 8vw, 96px)">
+      <div class="cs-two">
+        <div>
+          <p class="cs-k" style="margin: 0 0 12px">Problem</p>
+          <p style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; line-height: 1.3">Design a new, responsive product for BRIDGEGOOD in one three-week Google design sprint.</p>
+        </div>
+        <div>
+          <p class="cs-k" style="margin: 0 0 12px">Solution</p>
+          <p style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; line-height: 1.3">Fireside chats between industry pros and new designers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Stakeholders -->
+    <section class="cs-sec" aria-labelledby="s-stake">
+      <div class="cs-split" style="align-items: center">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">01 · Stakeholders</p>
+          <h2 id="s-stake" class="cs-h2">An open brief. Start with stakeholders.</h2>
+          <p class="cs-p" style="margin-top: 16px">With no defined problem, alignment came first. I interviewed three stakeholders and mapped their long-term goals.</p>
+        </div>
+        <figure style="margin: 0">
+          <div class="cs-panel" style="background: #FFFFFF; padding: 12px">
+            <button class="cs-zoom" type="button" aria-label="Expand image: stakeholder affinity map" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/7322bde682a7dbae90a271a318965cb4.jpg" alt="Stakeholder affinity map grouping sticky notes into accessibility, education, product vision, alumni, mentors, autonomy and background" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button>
+          </div>
+          <figcaption class="cs-cap">Stakeholder affinity map.</figcaption>
+        </figure>
+      </div>
+      <div class="cs-three" style="margin-top: clamp(28px, 4vw, 40px)">
+        <div class="cs-card"><p class="cs-cardk">Innovation</p><p class="cs-cardp">Distinct from the BRIDGEGOOD brand.</p></div>
+        <div class="cs-card"><p class="cs-cardk">Scalable impact</p><p class="cs-cardp">Open to all. Able to grow nationally.</p></div>
+        <div class="cs-card"><p class="cs-cardk">Low maintenance</p><p class="cs-cardp">Easy to run.</p></div>
+      </div>
+      <div class="cc-insight">
+        <p class="cs-k" style="margin: 0; color: #C9D6E1">The insight that set our audience</p>
+        <p class="cc-insightq">Thousands of students have come through BRIDGEGOOD. Few come back to help the next ones.</p>
+      </div>
+    </section>
+
+    <!-- 2. Research -->
+    <section class="cs-sec" aria-labelledby="s-research">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">02 · Research</p>
+          <h2 id="s-research" class="cs-h2">Two groups, one gap to bridge.</h2>
+        </div>
+        <p class="cs-p" style="padding-top: 34px">We talked to alumni, and to career switchers chasing their first UX job.</p>
+      </div>
+      <ul class="cc-pains"><li class="cc-pain"><span class="cc-who cc-who-C">Career switchers</span>Difficulty landing their first job</li><li class="cc-pain"><span class="cc-who cc-who-A">Alumni</span>Wanting to help, but not knowing where to start</li><li class="cc-pain"><span class="cc-who cc-who-A">Alumni</span>Insecurity about being good enough to mentor</li><li class="cc-pain"><span class="cc-who cc-who-C">Career switchers</span>A lack of visibility into current industry needs</li></ul>
+      <div class="cs-two" style="margin-top: clamp(32px, 4vw, 48px)">
+        <button class="cs-zoom" type="button" aria-label="Expand image: student persona" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/0041496ddb1c30d96824d5cf4f771a4e.jpg" alt="Persona: Alex Rios, 22, a graphic design major at a community college, with context, goals, challenges, delights and motivations" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+        <button class="cs-zoom" type="button" aria-label="Expand image: mentor persona" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/35020ca89060a15b4f6969ba0ba5d0ab.jpg" alt="Persona: Jameel Clark, 31, a senior experience designer, with context, goals, challenges, delights and motivations" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+      </div>
+    </section>
+
+    <!-- 3. Market -->
+    <section class="cs-sec" aria-labelledby="s-market">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">03 · Market</p>
+          <h2 id="s-market" class="cs-h2">Six competitors, compared.</h2>
+        </div>
+        
+      </div>
+      <p class="cs-p" style="padding-top: 16px">I compared six platforms related to the UX/educational space. Because this product was specific to BRIDGEGOOD and it's community, I didn't necessarily want to find differentiators, but more so gather inspiration to integrate into our solution.&nbsp;</p><figure style="margin: 0">
+          <div class="cs-panel">
+            <button class="cs-zoom" type="button" aria-label="Expand image: competitive analysis" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/dbbfb6914ca77d553f82546e5a551ea3.jpg" alt="Competitive analysis of six platforms with features, strengths and gaps" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+          </div>
+          <figcaption class="cs-cap">Six platforms.</figcaption>
+        </figure><div class="cc-market">
+        
+        
+      </div>
+    </section>
+
+    <!-- 4. Structure -->
+    <section class="cs-sec" aria-labelledby="s-structure">
+      <div>
+        <p class="cs-k" style="margin: 0 0 14px">04 · Structure</p>
+        <h2 id="s-structure" class="cs-h2">Scope the MVP.</h2>
+      </div>
+      <div class="cs-split" style="margin-top: clamp(28px, 4vw, 40px); align-items: center">
+        <figure style="margin: 0">
+          <button class="cs-zoom" type="button" aria-label="Expand image: brainstorming with the founder" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 16px"><img src="/images/b0434868df874ffce59c4f0dd75d34f2.jpg" alt="Two people at a whiteboard in the BRIDGEGOOD studio, mapping ideas during a brainstorm" style="display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 40%; border-radius: 16px; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+          <figcaption class="cs-cap">Brainstorming with BRIDGEGOOD's founder.</figcaption>
+        </figure>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <div class="cs-card"><p class="cs-cardk">Challenge</p><p class="cs-cardp">Our first site map had two dashboards, solving for each persona individually. With three weeks left, we needed to simplify our MVP.</p></div>
+          <div class="cs-card"><p class="cs-cardk">Solution</p><p class="cs-cardp">Build for students first. They benefit right away, and mentors join by hosting chats.</p></div>
+        </div>
+      </div>
+      <figure style="margin: clamp(36px, 5vw, 56px) 0 0">
+        <div class="cs-panel" style="background: #FFFFFF"><button class="cs-zoom" type="button" aria-label="Expand image: site map" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/d3c3cb9aa647b9fb5d903a8c8631b2ed.jpg" alt="Two site maps: the first with separate mentor and student dashboards crossed out, and the simplified version" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+        <figcaption class="cs-cap">Site map: mentor dashboard cut, students first.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 5. Design system -->
+    <section class="cs-sec" aria-labelledby="s-ds">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">05 · Design system</p>
+          <h2 id="s-ds" class="cs-h2">Built on the existing brand.</h2>
+        </div>
+        <p class="cs-p" style="padding-top: 34px">The system keeps BRIDGEGOOD’s color and type, and adds components that fit.</p>
+      </div>
+      <figure style="margin: clamp(36px, 5vw, 56px) 0 0">
+        <div class="cs-panel" style="background: #FFFFFF"><button class="cs-zoom" type="button" aria-label="Expand image: design system overview" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/e3484d4d6056e0bbd7437e0912728bf1.jpg" alt="Design system overview with type ramps, colors, buttons and form controls" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+      </figure>
+      <div class="cc-dsgrid">
+        <button class="cs-zoom" type="button" aria-label="Expand image: colors" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/dbfa29896249509b968304ecb80e3ed9.jpg" alt="Color: BG Blue and BG Gold primary colors with secondary blue and gold" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+        <button class="cs-zoom" type="button" aria-label="Expand image: type ramp" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/8d9aaae100648db48ebc522d8338d6c4.jpg" alt="Type ramp in Roboto Bold from 24 to 44" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+        <button class="cs-zoom" type="button" aria-label="Expand image: buttons" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/4b7aba3143e68a32e2174ca9b537a288.jpg" alt="Buttons: styles, patterns and intents for primary, secondary and tertiary actions" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+        <button class="cs-zoom" type="button" aria-label="Expand image: form controls" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/b4fb554d9fcaf7a3c2d6ca0497231f50.jpg" alt="Form controls: text input states for fill, inactive, focus and error" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+      </div>
+    </section>
+
+  </div>
+
+  <div style="width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+    <!-- 6. Final product -->
+    <section class="cs-sec" aria-labelledby="s-final">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">06 · Final product</p>
+          <h2 id="s-final" class="cs-h2">The finished product.</h2>
+        </div>
+        <p class="cs-p" style="padding-top: 34px">Browse chats, sign up, and join a video call with a mentor, on desktop, tablet and mobile. Two rounds of testing shaped it; the notes below show what we learned and what changed.</p>
+      </div>
+      <div class="cs-panel" style="margin-top: clamp(36px, 5vw, 56px); padding: clamp(28px, 5vw, 64px) clamp(16px, 5vw, 72px) clamp(24px, 4vw, 48px)">
+        <div class="cc-mb">
+          <div class="cc-lid">
+            <span class="cc-cam" aria-hidden="true"></span>
+            <div class="cc-screen"><video src="/images/261438ad36ca72c77cf4faa6c48a908e.mp4" poster="/images/40966b39b9acacb881cc8362080c39fd.jpg" autoplay="" muted="" loop="" playsinline="" preload="metadata" aria-label="Screen recording of the Continuing Community prototype: landing page, login, Camps, Ignite, sign-up and video chat"></video></div>
+          </div>
+          <div class="cc-base" aria-hidden="true"><span></span></div>
+        </div>
+      </div>
+      <p class="cs-cap">Prototype walkthrough.</p>
+      <div style="display: flex; flex-direction: column; gap: clamp(40px, 6vw, 72px); margin-top: clamp(48px, 7vw, 88px)">
+        <div class="cc-feat">
+          <div class="cc-ftext"><p class="cs-k" style="margin: 0">Product page</p><p class="cc-fp">The app at a glance.</p><p class="cc-fp">Bay Area mentors, front and center.</p><div class="cc-chg"><p class="cc-chgk">What changed</p><p class="cc-chgp">Testing showed mentors were hard to browse in a horizontal scroll. A grid cut the time it took to connect.</p></div></div>
+          <div class="cc-fimg"><button class="cs-zoom" type="button" aria-label="Expand image: Product page" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/18773e083c08210dfd27fd956f53d57a.jpg" alt="Laptop showing the Continuing Community landing page with fireside chats and the beginner’s community" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+        </div>
+        <div class="cc-feat cc-flip">
+          <div class="cc-ftext"><p class="cs-k" style="margin: 0">Camps</p><p class="cc-fp">Your dashboard of upcoming chats.</p><p class="cc-fp">Fireside copy and visuals, with a ticket concept.</p><div class="cc-chg"><p class="cc-chgk">What changed</p><p class="cc-chgp">Renamed from “Your Schedule.” The fireside name gave the product its own identity inside BRIDGEGOOD’s brand.</p></div></div>
+          <div class="cc-fimg"><button class="cs-zoom" type="button" aria-label="Expand image: Camps" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/bbd9c4fc5b867b4954c9f8afaade19c6.jpg" alt="Laptop showing the Camps dashboard with ticket-style fireside chat cards and people to meet" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+        </div>
+        <div class="cc-feat">
+          <div class="cc-ftext"><p class="cs-k" style="margin: 0">Ignite</p><p class="cc-fp">Browse topics. Sign up for chats.</p><p class="cc-fp">Host and topic details help people come prepared.</p><div class="cc-chg"><p class="cc-chgk">What changed</p><p class="cc-chgp">Renamed from “Upcoming Tea Times.” Testing pushed the product toward casual chats with mentors, and a side profile made each host clearer.</p></div></div>
+          <div class="cc-fimg"><button class="cs-zoom" type="button" aria-label="Expand image: Ignite" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/7f27c09d3491b4abda1af15145cbe4b4.jpg" alt="Laptop showing Ignite, a list of upcoming fireside chats with expandable details and sign-up buttons" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+        </div>
+        <div class="cc-feat cc-flip">
+          <div class="cc-ftext"><p class="cs-k" style="margin: 0">Personalized form</p><p class="cc-fp">Tells mentors who’s coming and what they care about.</p></div>
+          <div class="cc-fimg"><button class="cs-zoom" type="button" aria-label="Expand image: Personalized form" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/0def20657bea6d4481f570ac080256e5.jpg" alt="Laptop showing the sign-up form asking where you are tuning in from and what you hope to get out of the chat" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+        </div>
+        <div class="cc-feat">
+          <div class="cc-ftext"><p class="cs-k" style="margin: 0">Video chat</p><p class="cc-fp">Industry knowledge to help break into UX.</p><p class="cc-fp">Ask questions. Network. Sharpen skills.</p></div>
+          <div class="cc-fimg"><button class="cs-zoom" type="button" aria-label="Expand image: Video chat" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/274a844c25aa9952d5851671cd3b1d98.jpg" alt="Laptop showing a Leadership in UX video chat with two hosts and a row of attendees" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div>
+        </div>
+      </div>
+      <figure style="margin: clamp(48px, 7vw, 88px) 0 0">
+        <div class="cs-panel" style="background: #FFFFFF; display: flex; justify-content: center"><div style="width: 100%; max-width: 520px"><button class="cs-zoom" type="button" aria-label="Expand image: mobile screens" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/52ef9ef3ff1fd9d15f50a20be2b58f40.jpg" alt="Two phones showing the mobile Camps and Ignite screens" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none"></button></div></div>
+        <figcaption class="cs-cap">Mobile: Camps and Ignite.</figcaption>
+      </figure>
+    </section>
+
+    <nav aria-label="More case studies" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px 48px; padding: clamp(40px, 6vw, 72px) 0 clamp(72px, 11.5vw, 166px); border-top: 1px solid rgba(15,34,51,.12); margin-top: clamp(48px, 7vw, 88px)">
+      <a class="cs-link" href="/eltaai" style="display: flex; flex-direction: column; gap: 10px; color: #0F2233">
+        <span class="cs-k">Previous case study</span>
+        <span style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(24px, 2.8vw, 36px); font-weight: 300; line-height: 1.15">← EltaAI</span>
+      </a>
+      <a class="cs-link" href="/trusted-contact" style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; text-align: right; color: #0F2233">
+        <span class="cs-k">Next case study</span>
+        <span style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(24px, 2.8vw, 36px); font-weight: 300; line-height: 1.15">Trusted Contact Program →</span>
+      </a>
+    </nav>
+  </div>
+
+  <footer style="margin-top: auto; border-top: 1px solid rgba(15,34,51,.12)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 22px clamp(16px, 4vw, 32px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; font-size: 15px; color: #3D4A57">
+      <nav class="ft-links" aria-label="Elsewhere" style="display: flex; flex-wrap: wrap; gap: 8px clamp(16px, 2.4vw, 28px)">
+        <a href="mailto:alpmarrero@gmail.com">Email</a>
+        <a href="https://x.com/alpmarrero" target="_blank" rel="noopener noreferrer">@alpmarrero on X</a>
+        <a href="https://www.linkedin.com/in/alpmarrero/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.are.na/anna-marrero" target="_blank" rel="noopener noreferrer">Are.na</a>
+      </nav>
+      <p style="margin: 0">© Anna Marrero 2026</p>
+    </div>
+  </footer>
+  <!-- Image viewer: fits the image to the screen; click the image (or Zoom) to see it at full size and scroll around -->
+  
+    <div id="lb" hidden role="dialog" aria-modal="true" aria-label="Image viewer" style="position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; background: rgba(15,34,51,.92); font-family: 'Manrope', system-ui, sans-serif">
+      <div style="flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px clamp(16px, 3vw, 28px); color: #F3F5F6">
+        <p style="margin: 0; min-width: 0; font-size: 14px; line-height: 1.4; color: rgba(243,245,246,.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap" id="lb-cap"></p>
+        <div style="display: flex; gap: 8px; flex: 0 0 auto">
+          <button class="cs-lb-btn" type="button" id="lb-toggle">Zoom in</button>
+          <button class="cs-lb-btn" type="button" id="lb-close" aria-label="Close image viewer">Close ✕</button>
+        </div>
+      </div>
+      <div id="lb-backdrop" style="flex: 1 1 auto; min-height: 0; overflow: auto; display: flex; padding: 0 clamp(16px, 3vw, 28px) 24px; box-sizing: border-box">
+        <img id="lb-img" alt="" style="display: block; margin: auto; border-radius: 8px; background: #FFFFFF; box-shadow: 0 20px 60px rgba(0,0,0,.35);">
+      </div>
+    </div>
+  
+</main>
+<script src="/js/lightbox.js" defer></script>
+</body>
+</html>

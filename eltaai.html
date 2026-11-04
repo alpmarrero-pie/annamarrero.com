@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EltaAI — Anna Marrero</title>
+<meta name="description" content="Case study: a safety app, from prototype to App Store.">
+<meta property="og:title" content="EltaAI — Anna Marrero">
+<meta property="og:description" content="Case study: a safety app, from prototype to App Store.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400&amp;family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&amp;family=Manrope:wght@400;500;600&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background:#FDFDFC}
+a{color:#0F2233}a:hover{color:#1F3A52}
+.cs-nav a{text-decoration:none}
+.cs-nav a:hover{text-decoration:underline;text-underline-offset:6px}
+.cs-nav a:focus-visible,.cs-link:focus-visible,.ft-links a:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+/* Expandable images: an expand cursor on hover, click opens the viewer */
+.cs-zoom{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='18' fill='%230F2233' fill-opacity='.9'/%3E%3Cpath d='M23 12h5v5M28 12l-6 6M17 28h-5v-5M12 28l6-6' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") 20 20, zoom-in;transition:transform .25s ease}
+.cs-zoom:hover{transform:translateY(-2px)}
+.cs-zoom:focus-visible{outline:2px solid #0F2233;outline-offset:4px}
+.cs-lb-btn{min-width:44px;min-height:44px;padding:10px 16px;border-radius:999px;border:1px solid rgba(243,245,246,.4);background:transparent;color:#F3F5F6;font:600 14px 'Manrope',system-ui,sans-serif;cursor:pointer}
+.cs-lb-btn:hover{background:rgba(243,245,246,.12)}
+.cs-lb-btn:focus-visible{outline:2px solid #F3F5F6;outline-offset:3px}
+@media (prefers-reduced-motion: reduce){.cs-zoom{transition:none}}
+.cs-link{text-decoration:none}
+.cs-link:hover{text-decoration:underline;text-underline-offset:5px}
+.ft-links a{color:#3D4A57;text-decoration:none}
+.ft-links a:hover{color:#0F2233;text-decoration:underline;text-underline-offset:5px}
+/* Alternate layout: a centred 1040px column, two-column splits and image panels */
+.cs-sec{padding:clamp(56px,8vw,104px) 0 0}
+.cs-split>:only-child{grid-column:1/-1}
+.cs-split{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:start}
+.cs-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cs-donuts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1.5vw,20px);align-items:center}
+@media (max-width: 820px){.cs-three{grid-template-columns:1fr}.cs-donuts{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cs-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,4vw,48px)}
+@media (max-width: 820px){.cs-split,.cs-two{grid-template-columns:minmax(0,1fr)}}
+.cs-panel{padding:clamp(16px,3.5vw,44px);border-radius:20px;background:#E3E8EB}
+.cs-cap{margin-top:12px;font-size:14px;line-height:1.5;color:#3D4A57}
+.cs-k{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#4E6578}
+.cs-h2{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(26px,2.8vw,36px);font-weight:400;line-height:1.2}
+.cs-p{margin:0;font-size:16px;line-height:1.7;color:#3D4A57}
+.cs-stat{display:flex;align-items:baseline;gap:20px;padding:18px 0;border-top:1px solid rgba(15,34,51,.14)}
+.cs-num{margin:0;flex:0 0 220px;white-space:nowrap;font-family:'Newsreader',Georgia,serif;font-size:clamp(30px,3vw,40px);font-weight:300;line-height:1}
+.cs-statlabel{margin:0;font-size:14px;line-height:1.5;color:#3D4A57}
+.cs-chip{padding:6px 12px;border-radius:999px;border:1px solid rgba(15,34,51,.25);font-size:13px}
+.cs-card{padding:22px 24px;border-radius:14px;background:#FAFBFC;border:1px solid rgba(15,34,51,.1)}
+.cs-cardk{margin:0 0 8px;font-size:13px;font-weight:600;color:#4E6578}
+.cs-cardp{margin:0;font-size:15px;line-height:1.55}
+/* Process sections: the label sits above each section's content */
+/* EltaAI: iteration rows (V1 / V2 / Final screens side by side) */
+.el-it{display:flex;flex-direction:column;gap:20px}
+.el-ithead{display:flex;gap:clamp(16px,3vw,32px);align-items:flex-start}
+.el-itnum{margin:0;flex:0 0 auto;font-family:'Newsreader',Georgia,serif;font-size:clamp(36px,4vw,52px);font-weight:300;line-height:1;color:#9DB1C2}
+.el-ittitle{margin:-2px 0 0;font-family:'Newsreader',Georgia,serif;font-size:clamp(24px,2.4vw,30px);font-weight:400;line-height:1.2}
+.el-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,3vw,40px);align-items:start}
+.el-col{display:flex;flex-direction:column;gap:12px;min-width:0}
+.el-tag{margin:0;align-self:flex-start;padding:5px 11px;border-radius:999px;background:rgba(15,34,51,.07);font-size:12px;font-weight:600;letter-spacing:.04em;color:#2B3A48}
+.el-tag-final{background:#0F2233;color:#F3F5F6}
+.el-screen{display:flex;align-items:center;justify-content:center;width:100%;height:clamp(320px,40vw,560px);padding:clamp(8px,1.2vw,14px);border:0;border-radius:16px;background:#FAFBFC;box-sizing:border-box}
+.el-screen img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:10px}
+.el-note{margin:0;font-size:14px;line-height:1.5;color:#2B3A48}
+.el-test{flex-direction:column;gap:14px;background:transparent;border:1px solid rgba(15,34,51,.18)}
+.el-tbox{display:flex;flex-direction:column;gap:6px;padding:12px 14px;border-radius:10px;border:1px solid rgba(15,34,51,.25);background:#FAFBFC;font-size:13px;color:#2B3A48;min-width:0}
+.el-tbox b{font-family:'IBM Plex Mono','Courier New',monospace;font-size:10px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#4E6578}
+.el-tbox span{padding:6px 8px;border-radius:6px;background:rgba(15,34,51,.06)}
+.el-tbox-busy{width:min(220px,90%);border-style:dashed}
+.el-tbox-busy em{font-family:'Newsreader',Georgia,serif;font-size:15px;color:#4E6578;text-align:center;margin-top:2px}
+.el-tsplit{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:min(260px,95%);align-items:start}
+.el-why{margin:0;max-width:820px;font-size:16px;line-height:1.65;color:#2B3A48}
+/* EltaAI: survey bars */
+.el-ten{margin-top:clamp(40px,6vw,64px);padding:clamp(22px,3vw,32px) 0;border-top:1px solid rgba(15,34,51,.14);border-bottom:1px solid rgba(15,34,51,.14);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center}
+.el-tside p,.el-tmid p{margin:0}
+.el-tnum{font-family:'Newsreader',Georgia,serif;font-size:clamp(40px,4.4vw,56px);font-weight:300;line-height:1;color:#0F2233}
+.el-tlab{margin-top:8px !important;font-size:15px;font-weight:600;color:#0F2233}
+.el-tsub{margin-top:6px !important;font-size:14px;line-height:1.55;color:#3D4A57}
+.el-tright{text-align:right}
+.el-tmid{text-align:center;padding:0}
+.el-tmidh{font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:clamp(19px,1.9vw,24px);font-weight:300;line-height:1.25;color:#2B3A48}
+.el-hmw{margin-top:clamp(24px,3vw,32px);padding:clamp(22px,3vw,36px) clamp(22px,3.5vw,44px);border-radius:20px;background:#E3E8EB}
+.el-hmwq{margin:0;max-width:760px;font-family:'Newsreader',Georgia,serif;font-size:clamp(22px,2.2vw,28px);font-weight:300;line-height:1.2;color:#0F2233}
+@media (max-width: 820px){.el-ten{grid-template-columns:1fr;text-align:left}.el-tright,.el-tmid{text-align:left}.el-tmid{padding:0}}
+.el-sec2{margin-top:12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.el-find{padding:clamp(16px,2vw,22px) clamp(18px,2.2vw,26px);border-radius:16px}
+.el-findq{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(16px,1.4vw,18px);font-weight:400;line-height:1.4;color:#0F2233}
+@media (max-width: 820px){.el-sec2{grid-template-columns:1fr}}
+.el-int{margin-top:clamp(48px,7vw,80px)}
+.el-inth{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(22px,2.2vw,28px);font-weight:400;line-height:1.2;color:#0F2233}
+.el-intk{margin:18px 0 0;padding-left:16px;border-left:2px solid #0F2233;font-size:16px;line-height:1.6;color:#2B3A48}
+.el-intk strong{font-weight:600;color:#0F2233}
+.el-sn{padding:18px 18px 14px;border-radius:12px;border:1px solid rgba(15,34,51,.22);background:transparent;display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-height:150px}
+.el-ntag{padding:3px 9px;border-radius:999px;border:1px solid rgba(15,34,51,.25);font-size:12px;font-weight:600;color:#2B3A48}
+.el-ncount{font-family:'IBM Plex Mono','Courier New',monospace;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4E6578}
+.el-notes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.el-ntext{margin:0;font-size:14px;line-height:1.5;color:#0F2233}
+.el-nfoot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.el-ntags{display:flex;gap:6px;flex-wrap:wrap}
+@media (max-width: 560px){.el-notes{grid-template-columns:1fr}}
+.el-bar{padding:10px 0}
+.el-barlabel{margin:0 0 8px;display:flex;justify-content:space-between;gap:12px;font-size:14px;color:#2B3A48}
+.el-barpct{font-family:'Newsreader',Georgia,serif;font-size:clamp(18px, calc(18px + 4 * (100vw - 390px) / 1050), 22px);line-height:1;color:#0F2233}
+.el-track{height:8px;border-radius:999px;background:rgba(15,34,51,.08)}
+.el-track span{display:block;height:100%;border-radius:999px;background:#9DB1C2}
+/* EltaAI: final product screen recordings */
+.el-vrow{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,5vw,72px);align-items:center}
+.el-vrow-wide{grid-template-columns:minmax(0,4.4fr) minmax(0,6.6fr)}
+.el-flip{grid-template-columns:minmax(0,7fr) minmax(0,4fr)}
+.el-flip .el-vtext{order:2}
+.el-vtext{display:flex;flex-direction:column;gap:12px}
+.el-vids{display:flex;justify-content:center;gap:clamp(16px,3vw,40px)}
+.el-vid{margin:0;flex:0 1 260px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:10px}
+.el-vid video{display:block;width:100%;height:auto;aspect-ratio:520/1072}
+.el-vidcap{font-size:13px;font-weight:600;color:#4E6578}
+.el-sketches .cs-zoom img{aspect-ratio:3/4;object-fit:cover}
+@media (max-width: 820px){.el-row{grid-template-columns:1fr}.el-screen{height:460px}.el-vrow,.el-flip{grid-template-columns:1fr}.el-flip .el-vtext{order:0}}
+.cs-step{display:flex;flex-direction:column;gap:14px;padding:clamp(48px,7vw,88px) 0;border-top:1px solid rgba(15,34,51,.12)}
+.cs-k,.aa-bandk,.bs-pairk,.bs-sidek{font-family:'IBM Plex Mono','Courier New',monospace;font-weight:500}
+.el-idx{position:fixed;top:120px;left:max(16px,calc(50% - 520px - 196px));width:172px;z-index:50;font-family:'IBM Plex Mono','Courier New',monospace}
+.el-idx ol{list-style:none;margin:0;padding:0 0 0 14px;border-left:1px solid rgba(15,34,51,.14);display:flex;flex-direction:column;gap:2px}
+.el-idx a{position:relative;display:flex;gap:8px;padding:6px 0;font-size:10px;font-weight:500;letter-spacing:.12em;line-height:1.35;text-transform:uppercase;text-decoration:none;color:#7A8896;transition:color .2s ease}
+.el-idx a:hover{color:#0F2233}
+.el-idx a:focus-visible{outline:2px solid #0F2233;outline-offset:3px}
+.el-idx a.on{color:#0F2233}
+.el-idx a.on::before{content:"";position:absolute;left:-15px;top:4px;bottom:4px;width:2px;border-radius:2px;background:#0F2233}
+.el-idxn{flex:0 0 auto;color:inherit;opacity:.7}
+section[aria-labelledby^="s-"]{scroll-margin-top:96px}
+@media (max-width: 1319px){.el-idx{display:none}}
+@media (prefers-reduced-motion: reduce){.el-idx a{transition:none}}
+.el-scope{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,4vw,56px);align-items:start}
+@media (max-width: 820px){.el-scope{grid-template-columns:1fr}}
+/* Site header: logo placeholder and links in IBM Plex Mono; right side left open */
+.hd-logo{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;border:1px dashed rgba(15,34,51,.35);font-family:'IBM Plex Mono','Courier New',monospace;font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#4E6578 !important;text-decoration:none !important}
+.hd-links{display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,28px);font-family:'IBM Plex Mono','Courier New',monospace;font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.hd-links a{color:#4E6578 !important;text-decoration:none !important;transition:color .2s ease}
+.hd-links a:hover,.hd-links a[aria-current="page"]{color:#0F2233 !important}
+.el-vph{width:100%;aspect-ratio:9/19.5;max-height:520px;border-radius:24px;border:1px dashed rgba(15,34,51,.35);background:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:13px;color:#4E6578;box-sizing:border-box}
+/* Checklist redesign prototype: a self-playing phone demo (16s loop). Base styles are the final state, so reduced motion shows the finished list. */
+.ck-dev{position:relative;width:100%;aspect-ratio:520/1068;container-type:inline-size;border-radius:15.5%/7.6%;background:linear-gradient(135deg,#7C8FD6,#5A69B0 45%,#7C8FD6);box-shadow:inset 0 0 0 .4cqw rgba(15,34,51,.35)}
+.ck-bez{position:absolute;inset:1.4cqw;border-radius:14.6%/7.1%;background:#050505}
+.ck-scr{position:absolute;left:4.8cqw;top:4.2cqw;width:90.4cqw;height:196.5cqw;border-radius:12.5cqw;background:#F9F9F9;overflow:hidden;font-family:'DM Sans','Manrope',system-ui,sans-serif;color:#1F1F1F}
+.ck-scr *{box-sizing:border-box}
+.ck-a{position:absolute;margin:0}
+.ck-time{left:10.5cqw;top:4.6cqw;font-size:3.7cqw;font-weight:600;color:#1C1C1E}
+.ck-isl{left:30.5cqw;top:2.6cqw;width:29cqw;height:8cqw;border-radius:4cqw;background:#050505}
+.ck-stat{right:7cqw;top:5cqw;display:flex;gap:1.2cqw;align-items:center}
+.ck-stat i{display:block;background:#1F1F1F;border-radius:.5cqw}
+.ck-nav{left:5.2cqw;right:5.2cqw;top:18.5cqw;display:flex;justify-content:space-between;align-items:center;font-size:3cqw;color:#858585}
+.ck-title{left:5.2cqw;top:31cqw;font-size:4.6cqw;font-weight:500;color:#3A3A3C}
+.ck-sub{left:5.2cqw;right:5.2cqw;font-size:3cqw;line-height:1.4;font-weight:300;color:#3A3A3C}
+.ck-tabs{left:3cqw;right:3cqw;top:51cqw;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;font-size:2.8cqw;color:#3A3A3C}
+.ck-tabs svg{display:block;margin:0 auto 1.2cqw;width:5.4cqw;height:5.4cqw}
+.ck-hd{left:5.2cqw;right:5.2cqw;top:67.5cqw;height:6cqw;display:flex;justify-content:space-between;align-items:center;font-size:3cqw;font-weight:500;color:#3A3A3C}
+.ck-hd span{display:flex;align-items:center;gap:2cqw}
+.ck-addi{color:#3A3A3C}
+.ck-row{left:5.2cqw;right:5.2cqw;height:9cqw;display:flex;align-items:center;gap:2.6cqw}
+.ck-c{position:relative;flex:0 0 4.6cqw;width:4.6cqw;height:4.6cqw;border-radius:50%;border:.4cqw solid #A8A8A8}
+.ck-c b{position:absolute;inset:-.45cqw;border-radius:50%;background:#262626;display:flex;align-items:center;justify-content:center}
+.ck-c b::after{content:"";width:1.3cqw;height:2.4cqw;border:solid #FFF;border-width:0 .55cqw .55cqw 0;transform:translateY(-.25cqw) rotate(45deg)}
+.ck-t{position:relative;flex:1;height:100%;border-radius:1.8cqw;background:#FFF;border:.3cqw solid #DCDCDC;display:flex;align-items:center;padding:0 3cqw;font-size:3cqw;color:#3A3A3C;white-space:nowrap;overflow:hidden}
+.ck-type{display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:bottom}
+.ck-btn{left:5.2cqw;right:5.2cqw;top:160cqw;height:8.6cqw;border-radius:1.8cqw;background:#333;color:#FFF;font-size:3.4cqw;font-weight:600;display:flex;align-items:center;justify-content:center}
+.ck-bar{left:0;right:0;top:171.2cqw;height:25.4cqw;background:#FDFDFD url(/images/4586400328d74e1b305c1f476985da4e.png) center top/100% 100% no-repeat}
+.ck-load{left:0;right:0;top:92cqw;display:flex;flex-direction:column;align-items:center;gap:4cqw;font-size:3.2cqw;font-weight:300;color:#3A3A3C;opacity:0}
+.ck-spin{width:11cqw;height:11cqw}
+.ck-toast{left:12cqw;right:12cqw;top:148cqw;height:8.5cqw;border-radius:4.25cqw;background:#333;color:#FFF;font-size:3cqw;font-weight:600;display:flex;align-items:center;justify-content:center;gap:2cqw;opacity:0}
+.ck-tap{left:0;top:0;width:7cqw;height:7cqw;margin:-3.5cqw 0 0 -3.5cqw;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 .6cqw 2cqw rgba(0,0,0,.25),inset 0 0 0 .3cqw rgba(0,0,0,.08);opacity:0;pointer-events:none}
+
+/* timeline */
+@media (prefers-reduced-motion: no-preference){
+.ck-load{animation:ck-load 16s infinite}
+.ck-spin{animation:ck-rot 1s linear infinite}
+.ck-body{animation:ck-body 16s infinite}
+.ck-c1 b{animation:ck-c1 16s infinite}
+.ck-c2 b{animation:ck-c2 16s infinite}
+.ck-ca b{animation:ck-ca 16s infinite}
+.ck-r5{animation:ck-r5 16s infinite}
+.ck-e1{animation:ck-e1 16s infinite}
+.ck-e2{animation:ck-e2 16s infinite}
+.ck-ed{animation:ck-ed 16s infinite}
+.ck-ty2{animation:ck-ty2 16s infinite}
+.ck-ty5{animation:ck-ty5 16s infinite}
+.ck-btn{animation:ck-btn 16s infinite}
+.ck-toast{animation:ck-toast 16s infinite}
+.ck-tap{animation:ck-tap 16s infinite}
+}
+@keyframes ck-rot{to{transform:rotate(360deg)}}
+@keyframes ck-load{0%,13%{opacity:1}15%,96%{opacity:0}99%,100%{opacity:1}}
+@keyframes ck-body{0%,13.5%{opacity:0;transform:translateY(2cqw)}16.5%,93%{opacity:1;transform:none}96%,100%{opacity:0}}
+@keyframes ck-c1{0%,20.8%{opacity:0;transform:scale(.4)}21.6%,95%{opacity:1;transform:scale(1)}97%,100%{opacity:0}}
+@keyframes ck-c2{0%,38.8%{opacity:0;transform:scale(.4)}39.6%,95%{opacity:1;transform:scale(1)}97%,100%{opacity:0}}
+@keyframes ck-ca{0%,57.8%{opacity:0;transform:scale(.4)}58.6%,95%{opacity:1;transform:scale(1)}97%,100%{opacity:0}}
+@keyframes ck-r5{0%,45.5%{opacity:0;transform:translateY(-2cqw)}47%,95%{opacity:1;transform:none}97%,100%{opacity:0}}
+@keyframes ck-e1{0%,30%{opacity:1}30.5%,100%{opacity:0}}
+@keyframes ck-e2{0%,30%{opacity:0}30.5%,96%{opacity:1}97%,100%{opacity:0}}
+@keyframes ck-ed{0%,25.8%{border-color:#DCDCDC;background:#FFF}26.3%,37%{border-color:#333;background:#FFF}37.6%,100%{border-color:#DCDCDC;background:#FFF}}
+@keyframes ck-ty2{0%,30.5%{max-width:0}36%,100%{max-width:60cqw}}
+@keyframes ck-ty5{0%,47%{max-width:0}51%,100%{max-width:60cqw}}
+@keyframes ck-btn{0%,64.6%{background:#333;transform:none}65.2%,66.4%{background:#111;transform:scale(.97)}67%,100%{background:#333;transform:none}}
+@keyframes ck-toast{0%,66.8%{opacity:0;transform:translateY(2cqw)}68%,88%{opacity:1;transform:none}90%,100%{opacity:0}}
+@keyframes ck-tap{
+0%,17%{opacity:0;left:50cqw;top:135cqw;transform:scale(1)}
+18.5%{opacity:1;left:50cqw;top:135cqw}
+20.4%{left:7.5cqw;top:80.5cqw;transform:scale(1)}
+21%{transform:scale(.8)}21.8%{transform:scale(1)}
+24.6%{left:35cqw;top:92cqw;transform:scale(1)}
+25.6%{transform:scale(.8)}26.4%{transform:scale(1);left:35cqw;top:92cqw}
+37.6%{left:7.5cqw;top:92cqw;transform:scale(1)}
+38.6%{transform:scale(.8)}39.4%{transform:scale(1)}
+44%{left:78cqw;top:70.5cqw;transform:scale(1)}
+45%{transform:scale(.8)}45.8%{transform:scale(1)}
+56%{left:10cqw;top:70.5cqw;transform:scale(1)}
+57.2%{transform:scale(.8)}58%{transform:scale(1)}
+64%{left:45cqw;top:164.3cqw;transform:scale(1);opacity:1}
+65%{transform:scale(.8)}65.8%{transform:scale(1);opacity:1}
+68%,100%{opacity:0;left:45cqw;top:164.3cqw}}
+.ck-e1{position:absolute;left:3cqw;top:50%;transform:translateY(-50%);opacity:0}
+/* Ellie AI chatbot prototype: a self-playing phone demo (20s loop) on the same frame as the checklist demo. Base styles are the final state. */
+.eb-scr{background:#FDFDFD;color:#3A3A3C}
+.eb-bar{left:0;right:0;top:171.1cqw;height:25.4cqw;background:#FFF url(/images/a384bfa5986214fe33ad5423ea833a26.png) center top/100% 100% no-repeat}
+.eb-empty{position:absolute;inset:0;opacity:0}
+.eb-spark{left:42.2cqw;top:52.5cqw;width:6cqw;height:6cqw}
+.eb-h{left:0;right:0;top:62.5cqw;text-align:center;font-size:3.7cqw;font-weight:500;letter-spacing:.06em;color:#3A3A3C}
+.eb-sub{left:12cqw;right:12cqw;top:68.6cqw;text-align:center;font-size:3cqw;line-height:1.45;font-weight:300;color:#3A3A3C}
+.eb-in{left:5.5cqw;right:5.5cqw;top:92cqw;height:7.4cqw;border-radius:3.7cqw;border:.25cqw solid #E3E3E3;background:#FAFAFA;display:flex;align-items:center;gap:2cqw;padding:0 3.4cqw;font-size:2.6cqw;color:#737373;overflow:hidden}
+.eb-in svg{flex:0 0 auto;width:2.8cqw;height:2.8cqw}
+.eb-ph{white-space:nowrap}
+.eb-typed{position:absolute;left:3.4cqw;right:8cqw;top:1.6cqw;font-size:2.55cqw;line-height:1.55;color:#3A3A3C;opacity:0}
+.eb-typed span{display:block;overflow:hidden;white-space:nowrap}
+.eb-send{position:absolute;right:1.6cqw;top:50%;width:5.6cqw;height:5.6cqw;margin-top:-2.8cqw;border-radius:50%;background:#4C6A92;display:flex;align-items:center;justify-content:center;opacity:0}
+.eb-send svg{width:3cqw;height:3cqw}
+.eb-chips{left:5.5cqw;top:104cqw;display:flex;flex-direction:column;align-items:flex-start;gap:2.9cqw}
+.eb-chip{display:flex;align-items:center;gap:1.6cqw;height:5.4cqw;padding:0 2.2cqw;border:.25cqw solid #4C6A92;border-radius:1.8cqw;background:#FFF;font-size:2.55cqw;color:#5E5E62;white-space:nowrap}
+.eb-chip i{font-style:normal;font-size:2.8cqw;line-height:1}
+.eb-chat{position:absolute;inset:0}
+.eb-bub{left:12.9cqw;right:4.4cqw;top:35.7cqw;padding:2.2cqw 3.4cqw;border-radius:3.2cqw 3.2cqw .8cqw 3.2cqw;background:#4C6A92;color:#FFF;font-size:2.7cqw;line-height:1.55}
+.eb-think{left:5.5cqw;right:5.5cqw;top:49.5cqw;opacity:0}
+.eb-tk{display:flex;align-items:center;gap:2.2cqw;font-size:2.9cqw;font-weight:500}
+.eb-orb{width:4.4cqw;height:4.4cqw;border-radius:50%;background:radial-gradient(circle at 35% 35%,#E6EEF5,#8FB0CB 55%,#4C6A92);filter:blur(.15cqw)}
+.eb-shim{background:linear-gradient(90deg,#3A3A3C 0%,#3A3A3C 35%,#B5C6D6 50%,#3A3A3C 65%,#3A3A3C 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.eb-steps{margin:2.6cqw 0 0 2.1cqw;padding-left:4.3cqw;border-left:.25cqw solid #E3E3E3;display:flex;flex-direction:column;gap:2.4cqw;font-size:2.6cqw;font-weight:300;color:#5E5E62}
+.eb-st{display:flex;align-items:center;gap:1.8cqw;opacity:0}
+.eb-ic{position:relative;flex:0 0 3cqw;width:3cqw;height:3cqw}
+.eb-sp,.eb-ck{position:absolute;inset:0;border-radius:50%}
+.eb-sp{border:.4cqw solid #D7E1EA;border-top-color:#4C6A92}
+.eb-ck{background:#4C6A92;display:flex;align-items:center;justify-content:center;opacity:1}
+.eb-ck::after{content:"";width:.8cqw;height:1.45cqw;border:solid #FFF;border-width:0 .4cqw .4cqw 0;transform:translateY(-.15cqw) rotate(45deg)}
+.eb-done{left:5.5cqw;top:50cqw;display:flex;align-items:center;gap:1.6cqw;font-size:2.5cqw;font-weight:300;color:#737373}
+.eb-done svg{width:2.8cqw;height:2.8cqw}
+.eb-r{left:5.5cqw;right:5.5cqw;font-size:2.9cqw;line-height:1.5;font-weight:300;color:#3A3A3C}
+.eb-r b{font-weight:500}
+.eb-card{padding:2.4cqw 3cqw;border-radius:2.2cqw;background:#F3F6F9;display:flex;flex-direction:column;gap:1.6cqw}
+.eb-card p{margin:0;display:flex;gap:1.8cqw}
+.eb-card i{font-style:normal;flex:0 0 auto}
+.eb-act{display:inline-flex;align-items:center;gap:1.6cqw;padding:1.4cqw 2.4cqw;border-radius:1.8cqw;border:.25cqw solid #CFDCE7;background:#FFF;font-size:2.55cqw;font-weight:400}
+.eb-act em{font-style:normal;color:#4C6A92;font-weight:500;margin-left:1cqw}
+.eb-src{display:flex;align-items:center;gap:1.4cqw;font-size:2.3cqw;color:#8A8A8E}
+.eb-src span{padding:.6cqw 1.8cqw;border-radius:1.4cqw;background:#F1F1F3}
+.eb-fu{display:flex;flex-direction:column;align-items:flex-start;gap:2cqw}
+.eb-fu .eb-chip{font-size:2.5cqw}
+.eb-caret{display:inline-block;width:.35cqw;height:2.9cqw;margin-left:.4cqw;vertical-align:-.4cqw;background:#3A3A3C;opacity:0}
+.eb-in2{top:161cqw}
+
+@media (prefers-reduced-motion: no-preference){
+.eb-empty{animation:eb-empty 20s infinite}
+.eb-chips{animation:eb-chips 20s infinite}
+.eb-in1{animation:eb-in1 20s infinite}
+.eb-ph1{animation:eb-ph1 20s infinite}
+.eb-typed{animation:eb-typed 20s infinite}
+.eb-ty1{animation:eb-ty1 20s infinite}
+.eb-ty2{animation:eb-ty2 20s infinite}
+.eb-send{animation:eb-send 20s infinite}
+.eb-chat{animation:eb-chat 20s infinite}
+.eb-bub{animation:eb-bub 20s infinite}
+.eb-think{animation:eb-think 20s infinite}
+.eb-orb{animation:eb-orb 1.2s ease-in-out infinite}
+.eb-shim{animation:eb-shim 1.6s linear infinite}
+.eb-st1{animation:eb-st1 20s infinite}.eb-st2{animation:eb-st2 20s infinite}.eb-st3{animation:eb-st3 20s infinite}
+.eb-st1 .eb-ck{animation:eb-ck1 20s infinite}.eb-st2 .eb-ck{animation:eb-ck2 20s infinite}.eb-st3 .eb-ck{animation:eb-ck3 20s infinite}
+.eb-sp{animation:ck-rot .8s linear infinite}
+.eb-done{animation:eb-done 20s infinite}
+.eb-r1{animation:eb-r1 20s infinite}.eb-r2{animation:eb-r2 20s infinite}.eb-r3{animation:eb-r3 20s infinite}.eb-r4{animation:eb-r4 20s infinite}.eb-r5{animation:eb-r5 20s infinite}
+.eb-caret{animation:eb-caret 20s infinite}
+.eb-tap{animation:eb-tap 20s infinite}
+}
+@keyframes eb-empty{0%,23%{opacity:1}25%,96%{opacity:0}99%,100%{opacity:1}}
+@keyframes eb-chips{0%,8.5%{transform:none}10%,100%{transform:translateY(4.4cqw)}}
+@keyframes eb-in1{0%,8.5%{height:7.4cqw}10%,100%{height:11.8cqw}}
+@keyframes eb-ph1{0%,8.4%{opacity:1}8.6%,100%{opacity:0}}
+@keyframes eb-typed{0%,8.6%{opacity:0}8.8%,100%{opacity:1}}
+@keyframes eb-ty1{0%,9%{max-width:0}15.5%,100%{max-width:72cqw}}
+@keyframes eb-ty2{0%,15.5%{max-width:0}19%,100%{max-width:72cqw}}
+@keyframes eb-send{0%,10%{opacity:0;transform:scale(.6)}11%,100%{opacity:1;transform:none}}
+@keyframes eb-chat{0%,23.5%{opacity:0}25%,96%{opacity:1}99%,100%{opacity:0}}
+@keyframes eb-bub{0%,23.5%{opacity:0;transform:translateY(6cqw) scale(.96)}26.5%,100%{opacity:1;transform:none}}
+@keyframes eb-think{0%,26.5%{opacity:0}27.5%,45.5%{opacity:1}47%,100%{opacity:0}}
+@keyframes eb-orb{0%,100%{transform:scale(.85)}50%{transform:scale(1.1)}}
+@keyframes eb-shim{from{background-position:100% 0}to{background-position:-100% 0}}
+@keyframes eb-st1{0%,28%{opacity:0;transform:translateY(1cqw)}29%,100%{opacity:1;transform:none}}
+@keyframes eb-st2{0%,33%{opacity:0;transform:translateY(1cqw)}34%,100%{opacity:1;transform:none}}
+@keyframes eb-st3{0%,38%{opacity:0;transform:translateY(1cqw)}39%,100%{opacity:1;transform:none}}
+@keyframes eb-ck1{0%,32.8%{opacity:0;transform:scale(.4)}33.6%,100%{opacity:1;transform:none}}
+@keyframes eb-ck2{0%,37.8%{opacity:0;transform:scale(.4)}38.6%,100%{opacity:1;transform:none}}
+@keyframes eb-ck3{0%,43.8%{opacity:0;transform:scale(.4)}44.6%,100%{opacity:1;transform:none}}
+@keyframes eb-done{0%,46.5%{opacity:0}48%,100%{opacity:1}}
+@keyframes eb-r1{0%,48%{opacity:0;transform:translateY(1.2cqw)}50%,100%{opacity:1;transform:none}}
+@keyframes eb-r2{0%,52%{opacity:0;transform:translateY(1.2cqw)}54.5%,100%{opacity:1;transform:none}}
+@keyframes eb-r3{0%,58%{opacity:0;transform:translateY(1.2cqw)}60%,100%{opacity:1;transform:none}}
+@keyframes eb-r4{0%,62%{opacity:0;transform:translateY(1.2cqw)}64%,100%{opacity:1;transform:none}}
+@keyframes eb-r5{0%,66%{opacity:0;transform:translateY(1.2cqw)}68%,100%{opacity:1;transform:none}}
+@keyframes eb-caret{0%,48%{opacity:0}48.5%,50%,53%,56%,59%,62%,65%{opacity:1}51.5%,54.5%,57.5%,60.5%,63.5%{opacity:0}66.5%,100%{opacity:0}}
+@keyframes eb-tap{
+0%,4%{opacity:0;left:50cqw;top:120cqw;transform:scale(1)}
+5%{opacity:1;left:50cqw;top:120cqw}
+7.4%{left:40cqw;top:95.7cqw;transform:scale(1)}
+8%{transform:scale(.8)}8.6%{transform:scale(1);opacity:1}
+9.5%{opacity:0;left:40cqw;top:95.7cqw}
+18.5%{opacity:0;left:80cqw;top:100cqw}
+19.5%{opacity:1;left:80.5cqw;top:97.9cqw;transform:scale(1)}
+21%{transform:scale(.8)}21.8%{transform:scale(1);opacity:1}
+23%,100%{opacity:0;left:80.5cqw;top:97.9cqw}}
+</style>
+<style>[hidden]{display:none !important}</style>
+<link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+<!--
+  Trusted Contact Program, written into the case study template. Two reading speeds:
+  - Scanning: hero, the three "at a glance" cards, the final artifact, then each section's bold key point.
+  - Reading: the short paragraph, artifact and decision callout under each key point.
+  Keep each key point to one sentence and each paragraph to 2–4 sentences.
+-->
+<main style="min-height: 100vh; display: flex; flex-direction: column; background: #FDFDFC; color: #0F2233; font-family: 'Manrope', system-ui, sans-serif">
+  <!-- Section index: sticky tab menu on the left, follows the section eyebrows; hidden on narrower screens -->
+  <nav class="el-idx" aria-label="Sections in this case study">
+    <ol>
+      <li><a href="#s-audit" data-sec="s-audit" aria-current="false">Audit</a></li><li><a href="#s-scope" data-sec="s-scope" aria-current="false">Scope</a></li><li><a href="#s-frame" data-sec="s-frame" aria-current="false">Literature review</a></li><li><a href="#s-users" data-sec="s-users" aria-current="false">Survey & interviews</a></li><li><a href="#s-iterate" data-sec="s-iterate" aria-current="false">Iterations</a></li><li><a href="#s-system" data-sec="s-system" aria-current="false">Design system</a></li><li><a href="#s-final" data-sec="s-final" aria-current="false">Shipped product</a></li><li><a href="#s-next" data-sec="s-next" aria-current="false">Next steps</a></li>
+    </ol>
+  </nav>
+  <!-- Sticky top menu: stays in view while the page scrolls -->
+  <div class="site-nav" style="position: sticky; top: 0; z-index: 100; width: 100%; background: rgba(253,253,252,.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(15,34,51,.08)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+      <header class="cs-nav" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding: clamp(14px, 2vw, 20px) 0">
+          <div style="display: flex; align-items: center; gap: clamp(20px, 3vw, 36px)">
+            <nav class="hd-links" aria-label="Main"><a href="/">Home</a><a href="/work" aria-current="page">Work</a><a href="/about">About</a></nav>
+          </div>
+          <!-- Right side: intentionally left open -->
+          <div aria-hidden="true"></div>
+        </header>
+    </div>
+  </div>
+
+  <div style="width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 32px); box-sizing: border-box">
+
+    <!-- 1. Hero -->
+    <section aria-labelledby="cs-title" style="padding: clamp(48px, 8vw, 96px) 0 clamp(28px, 4vw, 40px); display: flex; flex-direction: column; gap: 20px">
+      <p style="font-family: 'IBM Plex Mono', 'Courier New', monospace; margin: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #4E6578">Product Design</p>
+      <h1 id="cs-title" style="margin: 0; max-width: 900px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(38px, 5.2vw, 68px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em">EltaAI</h1>
+      <p class="cs-subtitle" style="margin: -8px 0 0; max-width: 820px; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.4vw, 32px); font-weight: 300; line-height: 1.25; color: #2B3A48">A safety app, from prototype to App Store.</p>
+      <p style="margin: 0; max-width: 680px; font-size: clamp(16px, 1.4vw, 18px); line-height: 1.65; color: #3D4A57">EltaAI alerts your people when an outing goes wrong. I led research, the PRD and design, and rebuilt the core flows.</p>
+    </section>
+
+    <figure style="margin: 0">
+      <div class="cs-panel" style="padding: 0; overflow: hidden">
+        <button class="cs-zoom" type="button" aria-label="Expand image: EltaAI app screens" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/18eb203146d410fd3e992100a190c357.png" alt="EltaAI welcome screen beside the Plan Event Dashboard and the Camping at Mt. Shasta trip page" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: none; border-radius: 0"></button>
+      </div>
+    </figure>
+
+    <dl style="margin: clamp(28px, 4vw, 40px) 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px 32px">
+      <div><dt class="cs-k">Role</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Lead UX Designer &amp; Strategist</dd></div>
+      <div><dt class="cs-k">Team</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Founder, AI engineering, designers</dd></div>
+      <div><dt class="cs-k">Methods</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">Audit, interviews, survey, testing</dd></div>
+      <div><dt class="cs-k">Timeline</dt><dd style="margin: 6px 0 0; font-size: 15px; line-height: 1.5">May – October 2025</dd></div>
+    </dl>
+
+    <!-- 2. At a glance -->
+    <section aria-label="At a glance" style="padding-top: clamp(56px, 8vw, 96px)">
+      <div class="cs-two">
+        <div>
+          <p class="cs-k" style="margin: 0 0 12px">Challenge</p>
+          <p style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; line-height: 1.3">Experienced explorers trust their instincts, at times overlooking risks, skipping preparation, and failing to alert others of their whereabouts.</p>
+        </div>
+        <div>
+          <p class="cs-k" style="margin: 0 0 12px">Solution</p>
+          <p style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 300; line-height: 1.3">An app that uses AI to build each trip’s checklist from weather, history and alerts, It shares the plan with a user's safety network to keep everyone in the loop.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Audit -->
+    <section class="cs-sec" aria-labelledby="s-audit">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">01 · Audit</p>
+          <h2 id="s-audit" class="cs-h2">UX audit of the founder's build to refine IA</h2>
+        </div>
+        <p class="cs-p" style="padding-top: 34px">I mapped every screen and the relationship between objects, marking what to combine, move or cut. Trip creation became the center.</p>
+      </div>
+      <div class="cs-two" style="margin-top: clamp(36px, 5vw, 56px); align-items: start">
+        <figure style="margin: 0">
+          <div class="cs-panel">
+            <button class="cs-zoom" type="button" aria-label="Expand image: existing flow with audit notes" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/ff2e49297201abfb8c2406e22d602415.jpg" alt="Existing app flow annotated with combine, transfer and delete callouts" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+          </div>
+          <figcaption class="cs-cap">Understand the existing flow and mapping task relationships</figcaption>
+        </figure>
+        <figure style="margin: 0">
+          <div class="cs-panel">
+            <button class="cs-zoom" type="button" aria-label="Expand image: streamlined flow" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/f75a24295d114ad1a2abc3aae7ac8bdf.jpg" alt="Streamlined user flow from sign in to trips dashboard, create trip, check in, profile and emergency contacts" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+          </div>
+          <figcaption class="cs-cap">Define the foundation and reduce complexity by 50%</figcaption>
+        </figure>
+      </div>
+      <div class="cs-three" style="margin-top: clamp(28px, 4vw, 40px)">
+        <div class="cs-card"><p class="cs-cardk">Major observations</p><p class="cs-cardp">Contacts and activities belong in the plan. Onboarding was missing.</p></div>
+        <div class="cs-card"><p class="cs-cardk">Areas of focus</p><p class="cs-cardp">A shorter plan flow, clear contacts, a checklist, onboarding.</p></div>
+        <div class="cs-card"><p class="cs-cardk">Open questions</p><p class="cs-cardp">Is “trip” too narrow? Is it the solution users are looking for?</p></div>
+      </div>
+    </section>
+
+    <!-- 4. Brainstorm -->
+    <section class="cs-sec" aria-labelledby="s-scope">
+      <!-- Text on the left, the two sketches side by side on the right -->
+      <div class="el-scope">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">02 · Scope</p>
+          <h2 id="s-scope" class="cs-h2">Sketching through contexts with founder.</h2>
+          <p class="cs-p" style="margin-top: 16px">These sessions led to larger research questions: What are the escalation paths after missing a "check-in?" What information needs to be communicated to safety contacts? How do we maintain the users privacy and trust?</p>
+        </div>
+        <div class="cs-two el-sketches" style="gap: 16px">
+          <button class="cs-zoom" type="button" aria-label="Expand image: scenario sketch 2" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/5b16132c126c9d9ec50bfb341d677302.jpg" alt="Sketch: what happens when something goes wrong, from check-in to escalation" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+          <button class="cs-zoom" type="button" aria-label="Expand image: scenario sketch 3" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/9d1079f894082465e6f32f76cb771d4c.jpg" alt="Sketch: a new trip flow with dates, location, activities and a checklist" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Framing -->
+    <section class="cs-sec" aria-labelledby="s-frame">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">03 · LITERATURE REVIEW</p>
+          <h2 id="s-frame" class="cs-h2" style="width: min(590px, 100%)">Understanding outdoor safety systems.</h2>
+        </div>
+        
+      </div>
+      <p class="cs-p" style="padding-top: 16px; width: min(959px, 100%)">Literature exposed me to work that uses sensors to pick up on environmental and biological data in real time to provide detailed alerts to users about their location.<br><br>&nbsp;Although we don't have the resources to plant sensors around the globe, we could combine location tracking, past and present weather patterns, and relevant online activity (community and government alerts), to support their preparedness.&nbsp;</p><div class="cs-two" style="margin-top: clamp(36px, 5vw, 56px); align-items: center">
+        <figure style="margin: 0">
+          <div class="cs-panel" style="background: #FFFFFF">
+            <button class="cs-zoom" type="button" aria-label="Expand image: outdoor safety framework" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/ca58a8a03c775410235c08d98c30bf98.jpg" alt="Framework diagram with task, virtual and physical layers for outdoor safety monitoring" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+          </div>
+          <figcaption class="cs-cap" style="width: min(934px, 100%)">Future Outdoor Safety Monitoring: Integrating Human Activity with Recognition with the Internet of Physical-Virtual Things</figcaption>
+        </figure>
+        <figure style="margin: 0">
+          <div class="cs-panel" style="background: #FFFFFF">
+            <button class="cs-zoom" type="button" aria-label="Expand image: people, environment and technology" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/b18b71dbf9dae5887b236e96c659bbd2.jpg" alt="Venn diagram of people, environment and technology with tasks, actions and data at the intersections" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+          </div>
+          
+        </figure>
+      </div>
+    </section>
+
+
+    <!-- 7. Users: survey context and the pie, then the key finding as a tension, then the interview question -->
+    <section class="cs-sec" aria-labelledby="s-users">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">04 · SURVEY &amp; INTERVIEWS</p>
+          <h2 id="s-users" class="cs-h2">Understanding users to drive product strategy</h2>
+          <p class="cs-p" style="margin-top: 16px; width: min(421px, 100%)">224 survey responses showed me when people alert others of their whereabouts and how and why they do it.</p>
+        </div>
+        <div>
+          <p class="cs-k" style="margin: 0 0 16px">When people want someone looking out</p>
+          <img src="/images/02e724b15ed63c2d61c7969f181a41cf.png" alt="Pie chart: walking or running alone 26%, traveling solo 16%, outdoor adventures 16%, going out at night 15%" style="display: block; width: 100%; max-width: 360px; height: auto; margin: 0">
+        </div>
+      </div>
+
+      <!-- Key finding: two opposite feelings, one shared behavior -->
+      <div class="el-ten" role="group" aria-label="How checking in feels">
+        <div class="el-tside">
+          <p class="el-tnum">40%</p>
+          <p class="el-tlab">Reassured</p>
+          <p class="el-tsub">felt reassured checking in</p>
+        </div>
+        <div class="el-tmid">
+          <p class="el-tmidh">Opposite emotional experiences<br>with the same behaviors</p>
+          <p class="el-tsub">Regardless of how it feels, both groups still tell someone where they are.</p>
+        </div>
+        <div class="el-tside el-tright">
+          <p class="el-tnum">36%</p>
+          <p class="el-tlab">Obligated or intrusive</p>
+          <p class="el-tsub">28% obligated · 8% intrusive</p>
+        </div>
+      </div>
+
+      <!-- The question the finding led to -->
+      <div class="el-hmw">
+        <p class="cs-k" style="margin: 0 0 14px">PRIMARY RESEARCH QUESTION</p>
+        <p class="el-hmwq">How might we design a communication flow that provides safety while also maintaining privacy?</p>
+      </div>
+
+      <!-- Secondary findings from interviews -->
+      <div class="el-sec2">
+        <div class="el-find" style="background: #EDC6D0">
+          <p class="cs-k" style="margin: 0 0 8px; font-size: 12px; color: #6E3A4A">Secondary finding · 01</p>
+          <p class="el-findq">Participants rely on direct communication, like texts or calls, rather than tech like location tracking.</p>
+        </div>
+        <div class="el-find" style="background: #E4D6B8">
+          <p class="cs-k" style="margin: 0 0 8px; font-size: 12px; color: #6B5530">Secondary finding · 02</p>
+          <p class="el-findq">People forget to follow up, and the responsibility shifts onto the person being alerted.</p>
+        </div>
+      </div>
+
+      <!-- Interview insights: what the 11 interviews added, and the direction it set -->
+      <div class="cs-split el-int">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">Interview insights</p>
+          
+          <p class="cs-p" style="margin-top: 14px">We interviewed 11 participants, using the survey to shape our questions. While the other two designers explored safety and the outdoors, I probed safety and communication.</p>
+          <p class="el-intk">EltaAI could stand out by helping people plan, <strong>share those plans with loved ones, and use AI to keep everyone in a continuous loop of communication.</strong></p>
+        </div>
+        <ul class="el-notes" aria-label="Interview themes">
+          <li class="el-sn">
+            <p class="el-ntext">People want loved ones to know their plans and how long they’ll be gone, especially when they can’t be reached.</p>
+            <div class="el-nfoot"><span class="el-ntags"><span class="el-ntag">Communication</span><span class="el-ntag">Safety</span></span><span class="el-ncount">6 of 11</span></div>
+          </li>
+          <li class="el-sn">
+            <p class="el-ntext">Keeping others updated feels like pressure. In the flow of the day, people forget to follow up.</p>
+            <div class="el-nfoot"><span class="el-ntags"><span class="el-ntag">ADHD</span><span class="el-ntag">Communication</span></span><span class="el-ncount">5 of 11</span></div>
+          </li>
+          <li class="el-sn">
+            <p class="el-ntext">On risky trips, people share practical details but hold some back to avoid causing worry.</p>
+            <div class="el-nfoot"><span class="el-ntags"><span class="el-ntag">Communication</span><span class="el-ntag">Travel</span></span><span class="el-ncount">5 of 11</span></div>
+          </li>
+          <li class="el-sn">
+            <p class="el-ntext">People want help preparing: trail conditions, food and water for long hikes, gear for multi-day trips.</p>
+            <div class="el-nfoot"><span class="el-ntags"><span class="el-ntag">Packing</span><span class="el-ntag">Preparedness</span></span><span class="el-ncount">4 of 11</span></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8. Iterations: the core of the case study -->
+    <section class="cs-sec" aria-labelledby="s-iterate">
+      <p class="cs-k" style="margin: 0">05 · ITERATIONS</p>
+      <div style="display: flex; flex-direction: column; gap: clamp(56px, 8vw, 96px); margin-top: clamp(16px, 2vw, 24px)">
+
+      <article class="el-it" aria-labelledby="it-01">
+        <div class="el-ithead">
+          <p class="el-itnum">01</p>
+          <div>
+            <h3 id="it-01" class="el-ittitle">Separating intent to allow user's to focus.</h3>
+            
+          </div>
+        </div>
+        <p class="el-why"><span class="cs-k" style="margin-right: 12px">Why</span>One screen asking for trip details, who was going and a safety contact felt overwhelming. We separated them: trip details first, then companions and the safety contact on a new screen.</p><div class="cs-panel el-row">
+            <div class="el-col">
+              <p class="el-tag">V2 · Mid-fi</p>
+              <button class="cs-zoom el-screen" type="button" aria-label="Expand screen: Creating a plan, V2 · Mid-fi"><img src="/images/309fc31f2e6b69ae28f8f735f91dded3.png" alt="Low-fidelity create a trip form: add image, trip name, solo or group trip, location, start and end dates and times, collaborators"></button>
+              <p class="el-note">Everything on one screen.</p>
+            </div>
+            <div class="el-col">
+              <p class="el-tag">Usability testing</p>
+              <div class="el-screen el-test" role="img" aria-label="Diagram: trip details, who's going and the safety contact on one screen overwhelmed testers, so the flow was split into two screens">
+                <div class="el-tbox el-tbox-busy">
+                  <span>Trip details</span><span>Who’s going</span><span>Safety contact</span>
+                  <em>Overwhelming</em>
+                </div>
+                <svg aria-hidden="true" width="22" height="28" viewBox="0 0 22 28" fill="none" stroke="#4E6578" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2v22"></path><path d="M4 17l7 7 7-7"></path></svg>
+                <div class="el-tsplit">
+                  <div class="el-tbox"><b>Screen 1</b><span>Trip details</span></div>
+                  <div class="el-tbox"><b>Screen 2</b><span>Who’s going</span><span>Safety contact</span></div>
+                </div>
+              </div>
+              <p class="el-note">Testers felt overwhelmed. We split the flow.</p>
+            </div>
+            <div class="el-col">
+              <p class="el-tag el-tag-final">Final</p>
+              <button class="cs-zoom el-screen" type="button" aria-label="Expand screen: Creating a plan, final"><img src="/images/c93f933780136485232ec146a8bcb641.png" alt="Final event details screen for Camping in Mt. Shasta: start location, a same-as-end-location checkbox, end location, dates, start and end time"></button>
+              <p class="el-note">Trip details on their own. Who’s going and the safety contact come next.</p>
+            </div>
+        </div>
+        
+      </article>
+      <article class="el-it" aria-labelledby="it-02">
+        <div class="el-ithead">
+          <p class="el-itnum">02</p>
+          <div>
+            <h3 id="it-02" class="el-ittitle">Adding a safety network</h3>
+          </div>
+        </div>
+        <p class="el-why"><span class="cs-k" style="margin-right: 12px">Why</span>Consent is in place before any trip. Companions’ details give a safety contact someone else to reach.</p>
+        <div class="cs-panel el-row">
+            <div class="el-col">
+              <p class="el-tag">V1 · Lo-fi</p>
+              <button class="cs-zoom el-screen" type="button" aria-label="Expand screen: Adding a safety network, V1 · Lo-fi"><img src="/images/44ba3819dc3d58d6f8775d3dd59326e7.png" alt="Mid-fidelity emergency contacts step inside trip creation, listing two contacts with phone numbers and an Add Emergency Contact button"></button>
+              <p class="el-note">Contacts added while creating a trip.</p>
+            </div>
+            <div class="el-col">
+              <p class="el-tag">Usability testing</p>
+              <div class="el-screen el-test" role="img" aria-label="Diagram: adding a safety contact while creating a trip left no time for the contact to consent, so adding contacts moved to onboarding and the profile">
+                <div class="el-tbox el-tbox-busy">
+                  <span>Create a trip</span><span>Add safety contact</span><span>Waiting for consent…</span>
+                  <em>Not enough time to consent</em>
+                </div>
+                <svg aria-hidden="true" width="22" height="28" viewBox="0 0 22 28" fill="none" stroke="#4E6578" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2v22"></path><path d="M4 17l7 7 7-7"></path></svg>
+                <div class="el-tsplit">
+                  <div class="el-tbox"><b>Onboarding</b><span>Add contacts</span></div>
+                  <div class="el-tbox"><b>Profile</b><span>Safety network</span></div>
+                </div>
+              </div>
+              <p class="el-note">Contacts need time to consent. We moved them before the trip.</p>
+            </div>
+            <div class="el-col">
+              <p class="el-tag el-tag-final">Final</p>
+              <button class="cs-zoom el-screen" type="button" aria-label="Expand screen: Adding a safety network, final"><img src="/images/607df453632b2c60a6fa44641e3f4c3f.png" alt="Final People and Safety step 2 of 4: solo or group trip, travel companions, and required primary plus optional secondary safety contact"></button>
+              <p class="el-note">Pick a consented contact. Add companions and their details.</p>
+            </div>
+        </div>
+      </article>
+      <article class="el-it" aria-labelledby="it-03">
+        <div class="el-ithead">
+          <p class="el-itnum">03</p>
+          <div>
+            <h3 id="it-03" class="el-ittitle">Planning activities</h3>
+          </div>
+        </div>
+        <p class="el-why"><span class="cs-k" style="margin-right: 12px">Why</span>Testers felt tied to hour-by-hour plans and worried that a change would alert their safety contact. We removed times, so activities only feed the preparation checklist.</p>
+        <div class="cs-panel el-row">
+            <div class="el-col">
+              <p class="el-tag">V1 · Lo-fi</p>
+              <button class="cs-zoom el-screen" type="button" aria-label="Expand screen: Planning activities, V1 · Lo-fi"><img src="/images/e7921f5865061a49ef12a2758485831b.png" alt="Low-fidelity Activities screen with a week date picker and a day calendar showing kayaking from 7:45 to 9:45 AM"></button>
+              <p class="el-note">A day calendar.</p>
+            </div>
+            <div class="el-col">
+              <p class="el-tag">Usability testing</p>
+              <div class="el-screen el-test" role="img" aria-label="Diagram: an hour-by-hour plan made testers worry that a change would alert their safety contact, so times were removed and activities now feed a preparation checklist">
+                <div class="el-tbox el-tbox-busy">
+                  <span>7:45 · Kayaking</span><span>10:00 · Hike</span><span>1:00 · Lunch</span>
+                  <em>Plans change. Will that alert my contact?</em>
+                </div>
+                <svg aria-hidden="true" width="22" height="28" viewBox="0 0 22 28" fill="none" stroke="#4E6578" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2v22"></path><path d="M4 17l7 7 7-7"></path></svg>
+                <div class="el-tsplit">
+                  <div class="el-tbox"><b>Activities</b><span>Kayaking</span><span>Hike</span></div>
+                  <div class="el-tbox"><b>Checklist</b><span>Life vest</span><span>Water</span></div>
+                </div>
+              </div>
+              <p class="el-note">Times felt binding. We dropped them.</p>
+            </div>
+            <div class="el-col">
+              <p class="el-tag el-tag-final">Final</p>
+              <button class="cs-zoom el-screen" type="button" aria-label="Expand screen: Planning activities, final"><img src="/images/93db3f0eb2ec95da13d70628a37a9005.png" alt="Final Add Activities step 3 of 4: a searchable list of activities such as hiking, camping and kayaking with add buttons, notes and a Show selected count"></button>
+              <p class="el-note">Pick activities. They feed the preparation checklist.</p>
+            </div>
+        </div>
+      </article>
+      </div>
+    </section>
+
+    <!-- Design system: components, then type and color -->
+    <section class="cs-sec" aria-labelledby="s-system">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">06 · Design system</p>
+          <h2 id="s-system" class="cs-h2">One system behind every flow.</h2>
+        </div>
+        <p class="cs-p" style="padding-top: 34px">Buttons, inputs, safety contacts, modals and calendars, built once and reused across every screen. Click to enlarge.</p>
+      </div>
+      <figure style="margin: clamp(36px, 5vw, 56px) 0 0">
+        <div class="cs-panel">
+          <button class="cs-zoom" type="button" aria-label="Expand image: design system components" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/f6eb67379a9dd5eb586c9400da378422.jpg" alt="EltaAI design system components: buttons and icon buttons, input and search fields, contact and safety selectors, modals and calendar pickers" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+        </div>
+        <figcaption class="cs-cap">Components: buttons, inputs, contact and safety, modals, calendar.</figcaption>
+      </figure>
+      <figure style="margin: clamp(24px, 3vw, 32px) 0 0">
+        <div class="cs-panel">
+          <button class="cs-zoom" type="button" aria-label="Expand image: typography and color" style="display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: 10px"><img src="/images/5f291cb8eac2b6eea1e9e864b63e6279.jpg" alt="EltaAI typography scale from title to body text, and the color system: steel blue, sky blue, coral, mint green and a range of neutrals" style="display: block; width: 100%; height: auto; border-radius: 10px; background: #FFFFFF; box-shadow: 0 1px 3px rgba(15,34,51,.08), 0 10px 28px rgba(15,34,51,.10)"></button>
+        </div>
+        <figcaption class="cs-cap">Typography and color.</figcaption>
+      </figure>
+    </section>
+
+    <!-- 9. Final product: screen recordings -->
+    <section class="cs-sec" aria-labelledby="s-final">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">07 · Shipped Product</p>
+          <h2 id="s-final" class="cs-h2">Phase 1 Features</h2>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: clamp(48px, 7vw, 88px); margin-top: clamp(40px, 6vw, 64px)">
+
+        <div class="el-vrow el-vrow-wide">
+          <div class="el-vtext">
+            <h3 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 400; line-height: 1.25">Quick Timer</h3>
+            <p class="cs-p" style="font-size: 15px; font-weight: 600; color: #2B3A48">A quick way to let a safety contact know you’re out.</p>
+            <p class="cs-p" style="font-size: 15px">We shipped this as a test. The MVP centered on long outdoor trips, but we also wanted to explore check-ins for a different group: people on quick outings who want easy reassurance. After launch, usage would tell us whether it’s worth building out.</p>
+          </div>
+          <div class="el-vids"><figure class="el-vid"><video src="/images/314f71fb103e5518b9cae091794ad7d4.mp4" poster="/images/bdf926480075a9096a4ffca660f0bd04.jpg" autoplay="" muted="" loop="" playsinline="" preload="metadata" aria-label="Screen recording: Quick timer" style="aspect-ratio: 520 / 1068"></video><figcaption class="el-vidcap">Quick timer</figcaption></figure></div>
+        </div>
+        <div class="el-vrow el-flip">
+          <div class="el-vtext">
+            <h3 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 400; line-height: 1.25">Long Trip Plan</h3>
+            <p class="cs-p" style="font-size: 15px; font-weight: 600; color: #2B3A48">For people heading out on adventures, and the people thinking of them.</p>
+            <p class="cs-p" style="font-size: 15px">Trips combines location, past and current weather, and relevant online activity to flag conditions before users head out. It also shares the itinerary and expected return time with their contacts automatically, so no one has to keep checking in.</p>
+          </div>
+          <div class="el-vids"><figure class="el-vid"><video src="/images/6c25426d0ea3c52289100ec163743386.mp4" poster="/images/aeaf57ee1830e744a0355ccc2c294342.jpg" autoplay="" muted="" loop="" playsinline="" preload="metadata" aria-label="Screen recording: Event details"></video><figcaption class="el-vidcap">Event details</figcaption></figure><figure class="el-vid"><video src="/images/bf29bfeaa831f3bfadfbe2b114864ef4.mp4" poster="/images/4d6a5433ee1001e2b8d4b179db9157f5.jpg" autoplay="" muted="" loop="" playsinline="" preload="metadata" aria-label="Screen recording: People and safety"></video><figcaption class="el-vidcap">People and safety</figcaption></figure></div>
+        </div>
+        <div class="el-vrow">
+          <div class="el-vtext">
+            <h3 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 400; line-height: 1.25">Adding Activities &amp; AI Generated Checklist</h3>
+            <p class="cs-p" style="font-size: 15px">Pick activities. No times needed. They feed an AI-generated checklist that people can keep, edit or add to in one pass.</p>
+          </div>
+          <div class="el-vids"><figure class="el-vid"><video src="/images/903c00cc695708c3925f2cf3c3b19dc2.mp4" poster="/images/fbe23419ddc4c5d2105c03fbbafed38c.jpg" autoplay="" muted="" loop="" playsinline="" preload="metadata" aria-label="Screen recording: Add activities"></video><figcaption class="el-vidcap">Add activities</figcaption></figure><figure class="el-vid"><div class="ck-dev" role="img" aria-label="Animated prototype of the redesigned AI checklist: the list generates, items are kept with a tap on their circle, one item is edited inline, a new item is added, select all keeps everything, and Continue saves the checklist to the trip">
+<div class="ck-bez"></div>
+<div class="ck-scr" aria-hidden="true">
+<p class="ck-a ck-time">11:30</p><span class="ck-a ck-isl"></span>
+<span class="ck-a ck-stat"><svg viewBox="0 0 18 12" style="width:3.6cqw"><rect x="0" y="8" width="3" height="4" rx=".6" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx=".6" fill="#111"/><rect x="10" y="3" width="3" height="9" rx=".6" fill="#111"/><rect x="15" y="0" width="3" height="12" rx=".6" fill="#111"/></svg><svg viewBox="0 0 16 12" style="width:3.4cqw"><path d="M8 11.5l2.2-2.6a3.4 3.4 0 00-4.4 0zM3.4 6.5a7 7 0 019.2 0l1.5-1.8a9.4 9.4 0 00-12.2 0zM.3 3a11.6 11.6 0 0115.4 0" fill="#111" stroke="#111" stroke-width=".4"/></svg><svg viewBox="0 0 26 12" style="width:5.4cqw"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="19" height="8" rx="1.8" fill="#111"/><rect x="23.6" y="4" width="1.6" height="4" rx=".8" fill="#111" fill-opacity=".4"/></svg></span>
+<div class="ck-a ck-nav"><svg viewBox="0 0 24 24" style="width:4.4cqw;height:4.4cqw" fill="none" stroke="#202020" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg><span>4/4</span><svg viewBox="0 0 24 24" style="width:4.6cqw;height:4.6cqw" fill="none" stroke="#202020" stroke-width="2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></div>
+<p class="ck-a ck-title">Preparation</p>
+<p class="ck-a ck-sub" style="top:38.3cqw">An AI-generated checklist for your trip</p>
+<p class="ck-a ck-sub" style="top:43cqw">Tap a circle to keep an item. Tap text to edit.</p>
+<div class="ck-a ck-tabs">
+<span><svg viewBox="0 0 24 24" fill="none" stroke="#3D5A80" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>View All</span>
+<span><svg viewBox="0 0 24 24" fill="none" stroke="#8FA6BF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4l-4 3 2 4 2-1v10h8V10l2 1 2-4-4-3-2 2h-4z"/></svg>Clothes</span>
+<span><svg viewBox="0 0 24 24" fill="none" stroke="#8FA6BF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M4 20c0-3.5 2.7-6 6-6"/><circle cx="17" cy="17" r="2.5"/></svg>Gear</span>
+<span><svg viewBox="0 0 24 24" fill="none" stroke="#8FA6BF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v8M5 3v5a2 2 0 004 0V3M7 11v10M16 3c-2 0-3 3-3 6s1 4 3 4v8"/></svg>Food</span>
+</div>
+<div class="ck-body">
+<div class="ck-a ck-hd"><span><span class="ck-c ck-ca" style="flex-basis:4.6cqw;width:4.6cqw;height:4.6cqw"><b></b></span>Select all</span><span class="ck-addi">+ Add item</span></div>
+<div class="ck-a ck-row" style="top:76.0cqw"><span class="ck-c ck-c1"><b></b></span><span class="ck-t">Weather-appropriate layers</span></div><div class="ck-a ck-row" style="top:87.5cqw"><span class="ck-c ck-c2"><b></b></span><span class="ck-t ck-ed"><span class="ck-type ck-e1">Water bottle</span><span class="ck-e2"><span class="ck-type ck-ty2">40 oz. thermal water bottle</span></span></span></div><div class="ck-a ck-row" style="top:99.0cqw"><span class="ck-c ck-ca"><b></b></span><span class="ck-t">Offline map / GPS / compass</span></div><div class="ck-a ck-row" style="top:110.5cqw"><span class="ck-c ck-ca"><b></b></span><span class="ck-t">ID / cash / card</span></div><div class="ck-a ck-row ck-r5" style="top:122cqw"><span class="ck-c ck-ca"><b></b></span><span class="ck-t"><span class="ck-type ck-ty5">First aid kit</span></span></div>
+</div>
+<div class="ck-a ck-load"><svg class="ck-spin" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="20" stroke="#E3E8EB" stroke-width="5"/><path d="M24 4a20 20 0 0120 20" stroke="#333" stroke-width="5" stroke-linecap="round"/></svg><span>Generating your checklist…</span></div>
+<div class="ck-a ck-toast"><span>✓</span>Checklist saved to your trip</div>
+<div class="ck-a ck-btn">Continue</div>
+<div class="ck-a ck-bar"></div>
+<span class="ck-a ck-tap"></span>
+</div>
+</div><figcaption class="el-vidcap">AI checklist, redesigned</figcaption></figure></div>
+        </div>
+        <div class="el-vrow el-flip">
+          <div class="el-vtext">
+            <h3 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: clamp(22px, 2.2vw, 28px); font-weight: 400; line-height: 1.25">Ask Ellie – AI Chat</h3>
+            <p class="cs-p" style="font-size: 15px">Ellie helps users with questions about their trips and helps them tailor their plans when needed.</p>
+          </div>
+          <div class="el-vids"><figure class="el-vid"><div class="ck-dev" role="img" aria-label="Animated prototype of Ellie, the in-app AI assistant: the user asks whether recent rainfall at Mt. Shasta affects their trip, Ellie shows its thinking steps, then answers with conditions, the forecast, a checklist update, sources and follow-up suggestions">
+<div class="ck-bez"></div>
+<div class="ck-scr eb-scr" aria-hidden="true">
+<p class="ck-a ck-time">11:30</p><span class="ck-a ck-isl"></span>
+<span class="ck-a ck-stat"><svg viewBox="0 0 18 12" style="width:3.6cqw"><rect x="0" y="8" width="3" height="4" rx=".6" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx=".6" fill="#111"/><rect x="10" y="3" width="3" height="9" rx=".6" fill="#111"/><rect x="15" y="0" width="3" height="12" rx=".6" fill="#111"/></svg><svg viewBox="0 0 16 12" style="width:3.4cqw"><path d="M8 11.5l2.2-2.6a3.4 3.4 0 00-4.4 0zM3.4 6.5a7 7 0 019.2 0l1.5-1.8a9.4 9.4 0 00-12.2 0zM.3 3a11.6 11.6 0 0115.4 0" fill="#111" stroke="#111" stroke-width=".4"/></svg><svg viewBox="0 0 26 12" style="width:5.4cqw"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="19" height="8" rx="1.8" fill="#111"/><rect x="23.6" y="4" width="1.6" height="4" rx=".8" fill="#111" fill-opacity=".4"/></svg></span>
+
+<div class="eb-empty">
+<span class="ck-a eb-spark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.3 2.2 8.3 10.5 10.5-8.3 2.2-9.9 5.2-10.5 10.5-.6-5.3-2.2-8.3-10.5-10.5C9.8 9.8 11.4 6.8 12 1.5z" fill="#BFD0DC"/></svg></span>
+<p class="ck-a eb-h">ASK ELLIE</p>
+<p class="ck-a eb-sub">Ask Ellie anything regarding your events or other activities.</p>
+<div class="ck-a eb-in eb-in1"><svg class="eb-ph1" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.3 2.2 8.3 10.5 10.5-8.3 2.2-9.9 5.2-10.5 10.5-.6-5.3-2.2-8.3-10.5-10.5C9.8 9.8 11.4 6.8 12 1.5z" fill="#BFD0DC"/></svg><span class="eb-ph eb-ph1">Ask a question or send a task…</span>
+<div class="eb-typed"><span class="eb-ty1">A friend told me Mt Shasta has had some rainfall.</span><span class="eb-ty2">Does this affect our trip?</span></div>
+<span class="eb-send"><svg viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span></div>
+<div class="ck-a eb-chips">
+<span class="eb-chip"><svg viewBox="0 0 24 24" width="12" height="12" style="width:2.8cqw;height:2.8cqw" fill="none" stroke="#4C6A92" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l1.5 1.5L7 5M3 13l1.5 1.5L7 12M10 6h11M10 13h11M10 19h11"/></svg>Create a checklist for “Seattle Solo Trip”</span>
+<span class="eb-chip"><i>🏔️</i>When do I check in for Mt. Shasta?</span>
+<span class="eb-chip"><i>🌦️</i>What are the weather conditions?</span>
+</div>
+</div>
+<div class="eb-chat">
+<div class="ck-a eb-bub">A friend told me Mt Shasta has had some rainfall. Does this affect our trip?</div>
+<div class="ck-a eb-think"><div class="eb-tk"><span class="eb-orb"></span><span class="eb-shim">Thinking…</span></div>
+<div class="eb-steps">
+<span class="eb-st eb-st1"><span class="eb-ic"><span class="eb-sp"></span><span class="eb-ck"></span></span>Checking your Mt. Shasta trip, Nov 1–7</span>
+<span class="eb-st eb-st2"><span class="eb-ic"><span class="eb-sp"></span><span class="eb-ck"></span></span>Looking up recent rainfall and the forecast</span>
+<span class="eb-st eb-st3"><span class="eb-ic"><span class="eb-sp"></span><span class="eb-ck"></span></span>Reviewing trail reports near McBride Springs</span>
+</div></div>
+<p class="ck-a eb-done"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.3 2.2 8.3 10.5 10.5-8.3 2.2-9.9 5.2-10.5 10.5-.6-5.3-2.2-8.3-10.5-10.5C9.8 9.8 11.4 6.8 12 1.5z" fill="#8FB0CB"/></svg>Thought for 4s<svg viewBox="0 0 24 24" fill="none" stroke="#8A8A8E" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></p>
+<p class="ck-a eb-r eb-r1" style="top:56cqw"><b>Yes, but your trip can still go ahead.</b> Plan for wet conditions on the first two days.<span class="eb-caret"></span></p>
+<div class="ck-a eb-r eb-r2" style="top:67.5cqw"><div class="eb-card">
+<p><i>💧</i><span>Recent rain has left trails near McBride Springs muddy and slick.</span></p>
+<p><i>🌤️</i><span>Skies clear by Nov 2, with a chance of showers on Nov 4.</span></p>
+<p><i>🥾</i><span>Expect slower hiking times. I’d add an hour to day one.</span></p>
+</div></div>
+<div class="ck-a eb-r eb-r3" style="top:103.5cqw"><span class="eb-act"><span style="color:#4C6A92">✓</span>Added a rain shell and trekking poles to your checklist<em>Undo</em></span></div>
+<div class="ck-a eb-r eb-r4" style="top:116cqw"><div class="eb-src">Sources<span>Weather forecast</span><span>Trail reports</span></div></div>
+<div class="ck-a eb-r eb-r5" style="top:123cqw"><div class="eb-fu">
+<span class="eb-chip">Share the update with my safety contact</span>
+<span class="eb-chip">Show the hourly forecast</span>
+</div></div>
+<div class="ck-a eb-in eb-in2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5c.6 5.3 2.2 8.3 10.5 10.5-8.3 2.2-9.9 5.2-10.5 10.5-.6-5.3-2.2-8.3-10.5-10.5C9.8 9.8 11.4 6.8 12 1.5z" fill="#BFD0DC"/></svg><span class="eb-ph">Ask a question or send a task…</span></div>
+</div>
+<div class="ck-a eb-bar"></div>
+<span class="ck-a ck-tap eb-tap"></span>
+</div>
+</div><figcaption class="el-vidcap">Ellie, AI assistant (concept)</figcaption></figure></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Next steps -->
+    <section class="cs-sec" aria-labelledby="s-next">
+      <div class="cs-split">
+        <div>
+          <p class="cs-k" style="margin: 0 0 14px">08 · Next steps</p>
+          <h2 id="s-next" class="cs-h2">After launch.</h2>
+        </div>
+        <ol style="list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(15,34,51,.14)">
+          <li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 100px; font-size: 13px; font-weight: 600; color: #4E6578">Shipped</span><span style="font-size: 15px; line-height: 1.55">Live on the App Store.</span></li>
+          <li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 100px; font-size: 13px; font-weight: 600; color: #4E6578">Learn</span><span style="font-size: 15px; line-height: 1.55">Find where planning stalls, and how alerts land with real contacts.</span></li>
+          <li style="display: flex; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(15,34,51,.14)"><span style="flex: 0 0 100px; font-size: 13px; font-weight: 600; color: #4E6578">Measure</span><span style="font-size: 15px; line-height: 1.55">[Plans created with a contact, quick timer use, check-ins completed on time.]</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 11. Previous / next case study -->
+    <nav aria-label="More case studies" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px 48px; padding: clamp(40px, 6vw, 72px) 0 clamp(72px, 11.5vw, 166px); border-top: 1px solid rgba(15,34,51,.12); margin-top: clamp(48px, 7vw, 88px)">
+      <a class="cs-link" href="/analysis-agent" style="display: flex; flex-direction: column; gap: 10px; color: #0F2233">
+        <span class="cs-k">Previous case study</span>
+        <span style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(24px, 2.8vw, 36px); font-weight: 300; line-height: 1.15">← Analysis Agent</span>
+      </a>
+      <a class="cs-link" href="/continuing-community" style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px; text-align: right; color: #0F2233">
+        <span class="cs-k">Next case study</span>
+        <span style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(24px, 2.8vw, 36px); font-weight: 300; line-height: 1.15">Continuing Community →</span>
+      </a>
+    </nav>
+  </div>
+
+  <footer style="margin-top: auto; border-top: 1px solid rgba(15,34,51,.12)">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 22px clamp(16px, 4vw, 32px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; font-size: 15px; color: #3D4A57">
+      <nav class="ft-links" aria-label="Elsewhere" style="display: flex; flex-wrap: wrap; gap: 8px clamp(16px, 2.4vw, 28px)">
+        <a href="mailto:alpmarrero@gmail.com">Email</a>
+        <a href="https://x.com/alpmarrero" target="_blank" rel="noopener noreferrer">@alpmarrero on X</a>
+        <a href="https://www.linkedin.com/in/alpmarrero/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.are.na/anna-marrero" target="_blank" rel="noopener noreferrer">Are.na</a>
+      </nav>
+      <p style="margin: 0">© Anna Marrero 2026</p>
+    </div>
+  </footer>
+  <!-- Image viewer: fits the image to the screen; click the image (or Zoom) to see it at full size and scroll around -->
+  
+    <div id="lb" hidden role="dialog" aria-modal="true" aria-label="Image viewer" style="position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; background: rgba(15,34,51,.92); font-family: 'Manrope', system-ui, sans-serif">
+      <div style="flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px clamp(16px, 3vw, 28px); color: #F3F5F6">
+        <p style="margin: 0; min-width: 0; font-size: 14px; line-height: 1.4; color: rgba(243,245,246,.85); overflow: hidden; text-overflow: ellipsis; white-space: nowrap" id="lb-cap"></p>
+        <div style="display: flex; gap: 8px; flex: 0 0 auto">
+          <button class="cs-lb-btn" type="button" id="lb-toggle">Zoom in</button>
+          <button class="cs-lb-btn" type="button" id="lb-close" aria-label="Close image viewer">Close ✕</button>
+        </div>
+      </div>
+      <div id="lb-backdrop" style="flex: 1 1 auto; min-height: 0; overflow: auto; display: flex; padding: 0 clamp(16px, 3vw, 28px) 24px; box-sizing: border-box">
+        <img id="lb-img" alt="" style="display: block; margin: auto; border-radius: 8px; background: #FFFFFF; box-shadow: 0 20px 60px rgba(0,0,0,.35);">
+      </div>
+    </div>
+  
+</main>
+<script src="/js/lightbox.js" defer></script>
+<script src="/js/section-index.js" defer></script>
+</body>
+</html>
