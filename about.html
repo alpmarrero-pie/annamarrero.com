@@ -34,6 +34,14 @@ a{color:#0F2233}a:hover{color:#1F3A52}
 .ph-t{margin:0;font-family:'Newsreader',Georgia,serif;font-size:clamp(22px,2.2vw,26px);font-weight:400;line-height:1.25;color:#0F2233}
 .ph-b{margin:0;font-size:15px;line-height:1.65;color:#3D4A57}
 @media (max-width: 820px){.ph-grid{grid-template-columns:1fr}}
+/* Scroll cue: a downward chevron (outline only, no shaft) hinting there's more below the intro */
+.ab-scrollcue{position:fixed;left:50%;bottom:clamp(30px,4.6vh,46px);transform:translateX(-50%);z-index:50;display:inline-flex;align-items:flex-end;justify-content:center;width:44px;height:15px;padding:0;border:0;background:transparent;color:#4E6578;cursor:pointer;opacity:.9;transition:opacity .45s ease}
+.ab-scrollcue:hover{opacity:1;color:#0F2233}
+.ab-scrollcue:focus-visible{outline:2px solid #0F2233;outline-offset:4px;border-radius:8px}
+.ab-scrollcue svg{animation:ab-bounce 1.8s ease-in-out infinite}
+.ab-scrollcue.hide{opacity:0;pointer-events:none}
+@keyframes ab-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+@media (prefers-reduced-motion: reduce){.ab-scrollcue svg{animation:none}}
 </style>
 <style>[hidden]{display:none !important}</style>
 <link rel="stylesheet" href="/css/responsive.css">
@@ -143,6 +151,12 @@ a{color:#0F2233}a:hover{color:#1F3A52}
     
 
   </div>
+
+  <!-- Scroll cue: downward chevron, bottom-centre, hinting at the Design Philosophy section below -->
+  <button type="button" class="ab-scrollcue" id="ab-scrollcue" aria-label="Scroll down to Design Philosophy">
+    <svg aria-hidden="true" width="20" height="11.25" viewBox="4 7.5 16 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+  </button>
+
   <!-- Footer: email and social links on the left, name on the right -->
   <footer style="position: relative; margin-top: auto; border-top: 1px solid rgba(15,34,51,.12)">
     <div style="max-width: 1200px; margin: 0 auto; padding: 22px clamp(16px, 4vw, 32px); box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; font-family: 'Manrope', system-ui, sans-serif; font-size: 15px; color: #3D4A57">
@@ -156,6 +170,21 @@ a{color:#0F2233}a:hover{color:#1F3A52}
     </div>
   </footer>
 </main>
+<script>
+(function () {
+  var cue = document.getElementById('ab-scrollcue');
+  var target = document.getElementById('manifesto');
+  if (!cue) return;
+  cue.addEventListener('click', function () {
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  function canScroll() { return (document.documentElement.scrollHeight - window.innerHeight) > 40; }
+  function sync() { cue.classList.toggle('hide', window.scrollY > 120 || !canScroll()); }
+  window.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync, { passive: true });
+  sync();
+})();
+</script>
 <script src="/js/prefetch.js" defer></script>
 </body>
 </html>
