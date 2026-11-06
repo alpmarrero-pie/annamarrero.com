@@ -100,7 +100,7 @@
     currentEl.innerHTML =
       '<div class="td-title" style="display: flex; flex-direction: column; align-items: center; gap: 14px">' +
       '<p style="font-family: \'IBM Plex Mono\', \'Courier New\', monospace; margin: 0; font-size: 12px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: #2B3A48">' + esc(c.tag) + '</p>' +
-      '<h1 style="margin: 0; font-family: \'Newsreader\', Georgia, serif; font-size: clamp(28px, min(5.2vw, 8.5vh), 84px); overflow-wrap: anywhere; font-weight: 300; line-height: 0.95; letter-spacing: -0.02em; color: #0F2233">' + esc(c.title) + '</h1>' +
+      '<h1 style="margin: 0; font-family: \'Newsreader\', Georgia, serif; font-size: clamp(24px, 8.5vw, 72px); white-space: nowrap; font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; color: #0F2233">' + esc(c.title) + '</h1>' +
       '<p class="td-desc" style="margin: 0; font-size: clamp(14px, 1.2vw, 16px); line-height: 1.6; color: #2B3A48">' + esc(c.desc) + '</p>' +
       '</div>';
   }
